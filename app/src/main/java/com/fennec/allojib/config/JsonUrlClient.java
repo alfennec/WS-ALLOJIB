@@ -14,6 +14,7 @@ import org.json.JSONObject;
 public class JsonUrlClient {
 
     public boolean result_succes = false;
+    public boolean result_error = false;
 
     public JsonUrlClient(String link , final Context ctx)
     {
@@ -27,20 +28,29 @@ public class JsonUrlClient {
                     {
                         if(result != null)
                         {
-                            if(result == "error")
-                            {
-                                    //so somting
-                            }
-                            else {
-                                getJsonClient( result );
-                            }
+                            ConditionResult( result );
                         }
                     }
                 });
 
     }
 
-    public void getJsonClient( String result )
+    public void ConditionResult(String result )
+    {
+        if(result.equals("succes"))
+        {
+            result_succes = true;
+        }
+        else if(result.equals("error"))
+        {
+            result_error = true;
+        }
+        else {
+            getJsonClient(result);
+        }
+    }
+
+    public void getJsonClient(String result)
     {
         try
         {
@@ -49,21 +59,27 @@ public class JsonUrlClient {
 
             for (int i=0; i < jArray.length(); i++)
             {
-
                 Client json_client = new Client();
 
                 try
                 {
                     JSONObject oneObject = jArray.getJSONObject(i);
 
-                    json_client.id = Integer.parseInt(oneObject.getString("id"));
-                    //json_fam.nbr_plat = Integer.parseInt(oneObject.getString("nbr_plat"));
+                    json_client.id      = Integer.parseInt(oneObject.getString("id"));
+                    json_client.email   = oneObject.getString("email");
+                    json_client.pass    = oneObject.getString("pass");
+                    json_client.nom     = oneObject.getString("nom");
+                    json_client.prenom  = oneObject.getString("prenom");
+                    json_client.tel     = oneObject.getString("tel");
+                    json_client.adresse = oneObject.getString("adresse");
+                    json_client.ville   = oneObject.getString("ville");
+                    json_client.sexe    = Integer.parseInt(oneObject.getString("pass"));
+
                 }
                 catch (JSONException e)
                 {
-                    //Log.e("tag_json", ""+e);
+                        //Log.e("tag_json", ""+e);
                 }
-
                 ClientRepository.main_Client = json_client;
             }
         }

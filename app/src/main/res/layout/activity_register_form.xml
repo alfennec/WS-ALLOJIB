@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".controller.Register_form">
 
     <EditText
         android:id="@+id/editText_nom"
@@ -141,5 +141,12 @@
         android:layout_weight="1"
         android:text="avant message"
         tools:text="avant message" />
+
+    <ProgressBar
+        android:id="@+id/progress_json"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
 </LinearLayout>
