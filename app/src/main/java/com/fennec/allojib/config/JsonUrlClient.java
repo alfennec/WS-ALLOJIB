@@ -1,6 +1,7 @@
 package com.fennec.allojib.config;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.fennec.allojib.entity.Client;
 import com.fennec.allojib.repository.ClientRepository;
@@ -28,6 +29,7 @@ public class JsonUrlClient {
                     {
                         if(result != null)
                         {
+                            //Log.d("TAG_JSON", "onClick: SEND URL " + result);
                             ConditionResult( result );
                         }
                     }
@@ -35,7 +37,7 @@ public class JsonUrlClient {
 
     }
 
-    public void ConditionResult(String result )
+    public void ConditionResult(String result)
     {
         if(result.equals("succes"))
         {
@@ -46,6 +48,7 @@ public class JsonUrlClient {
             result_error = true;
         }
         else {
+            result_succes = true;
             getJsonClient(result);
         }
     }
@@ -80,6 +83,7 @@ public class JsonUrlClient {
                 {
                         //Log.e("tag_json", ""+e);
                 }
+
                 ClientRepository.main_Client = json_client;
             }
         }

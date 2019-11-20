@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,6 +29,15 @@ public class MainActivity extends AppCompatActivity {
     public static MainActivity main;
     String MY_PREFS_NAME = "first_log";
 
+    public ProgressBar progressBar2;
+    public int progress = 0;
+
+    EditText editText_email;
+    EditText editText_pass;
+
+    public Handler handler = new Handler();
+
+    public JsonUrlClient jsonClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,8 +57,12 @@ public class MainActivity extends AppCompatActivity {
             else{
                 setContentView(R.layout.login_form);
 
-                EditText editText_email = (EditText) findViewById(R.id.editText_email);
-                EditText editText_pass = (EditText) findViewById(R.id.editText_pass);
+                editText_email = (EditText) findViewById(R.id.editText_email);
+                editText_pass = (EditText) findViewById(R.id.editText_pass);
+
+                progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
+                progressBar2.setMax(100);
+                progress = progressBar2.getProgress();
 
                 Button Button_valider = (Button) findViewById(R.id.Button_valider);
                 Button_valider.setOnClickListener(new View.OnClickListener()
@@ -56,7 +70,66 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v)
                     {
-                        Toast.makeText(main,"connexion to the App", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(main,"connexion to the App", Toast.LENGTH_SHORT).show();
+
+                        String url_informations = "livraison/json/getClient.php?";
+
+                        String email = "email="+(editText_email.getText()).toString();
+                        String pass = "&pass="+(editText_pass.getText()).toString();
+
+                        url_informations = constant.url_host+url_informations+email+pass;
+
+                        jsonClient = new JsonUrlClient(url_informations, main);
+
+                        new Thread(new Runnable()
+                        {
+                            public void run()
+                            {
+                                while (progress < 100)
+                                {
+                                    progress += 1;
+                                    handler.post(new Runnable()
+                                    {
+                                        public void run()
+                                        {
+                                            progressBar2.setProgress(progress);
+                                        }
+                                    });
+
+                                    try
+                                    {
+                                        // Sleep for 100 milliseconds to show the progress slowly.
+                                        Thread.sleep(20);
+                                    } catch (InterruptedException e)
+                                    {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                // Progress finished, re-enter UI thread and set text
+                                handler.post(new Runnable()
+                                {
+                                    @Override
+                                    public void run()
+                                    {
+                                        progressBar2.setProgress(100);
+
+                                        if(!jsonClient.result_error)
+                                        {
+                                            Toast.makeText(main,"Connexion faite avec succés", Toast.LENGTH_SHORT).show();
+
+                                            Intent intent = new Intent(main, Menu_Activity.class);
+                                            startActivity(intent);
+
+                                            main.finish();
+
+                                        }else {
+                                            Toast.makeText(main,"Email ou mot de pass incorrect ", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                    }
+                                });
+                            }
+                        }).start();
                     }
                 });
 
