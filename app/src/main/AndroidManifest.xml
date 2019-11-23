@@ -12,7 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.Register_form"></activity>
+        <activity android:name=".controller.Restaurant_Activity"></activity>
+        <activity
+            android:name=".controller.CategoryPlat_Activity"
+            android:label="@string/title_activity_category_plat_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".controller.Register_form" />
         <activity android:name=".controller.Menu_Activity" />
         <activity android:name=".Wait_Activity" />
         <activity android:name=".MainActivity">

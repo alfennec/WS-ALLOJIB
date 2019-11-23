@@ -18,7 +18,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fennec.allojib.config.JsonUrlCategoryPlat;
 import com.fennec.allojib.config.JsonUrlClient;
+import com.fennec.allojib.config.JsonUrlPlat;
+import com.fennec.allojib.config.JsonUrlRestaurant;
 import com.fennec.allojib.config.constant;
 import com.fennec.allojib.controller.Menu_Activity;
 import com.fennec.allojib.entity.Client;
@@ -47,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         if(isNetworkConnected())
         {
-            if(isSharedPreferences())
+            /*if(isSharedPreferences())
             {
                 Intent intent = new Intent(main, Menu_Activity.class);
                 startActivity(intent);
 
                 main.finish();
             }
-            else{
+            else{*/
                 setContentView(R.layout.login_form);
 
                 editText_email = (EditText) findViewById(R.id.editText_email);
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         //Toast.makeText(main,"connexion to the App", Toast.LENGTH_SHORT).show();
 
-                        String url_informations = "livraison/json/getClient.php?";
+                        String url_informations = "/json/getClient.php?";
 
                         String email = "email="+(editText_email.getText()).toString();
                         String pass = "&pass="+(editText_pass.getText()).toString();
@@ -80,6 +83,15 @@ public class MainActivity extends AppCompatActivity {
                         url_informations = constant.url_host+url_informations+email+pass;
 
                         jsonClient = new JsonUrlClient(url_informations, main);
+
+                        url_informations = constant.url_host+"/json/getTable.php?table=";
+
+                        JsonUrlPlat jsonUrlPlat = new JsonUrlPlat(url_informations+"tbl_plat", main);
+                        JsonUrlRestaurant jsonRestaurant = new JsonUrlRestaurant(url_informations+"tbl_retaurant", main);
+                        JsonUrlCategoryPlat jsonUrlCategoryPlat = new JsonUrlCategoryPlat(url_informations+"tbl_category_plat", main);
+
+                        //Log.d("TAG_JSON", "onClick: SEND URL " +url_informations);
+                        //Toast.makeText(main,"onClick: SEND URL " +url_informations, Toast.LENGTH_SHORT).show();
 
                         new Thread(new Runnable()
                         {
@@ -99,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                                     try
                                     {
                                         // Sleep for 100 milliseconds to show the progress slowly.
-                                        Thread.sleep(20);
+                                        Thread.sleep(50);
                                     } catch (InterruptedException e)
                                     {
                                         e.printStackTrace();
@@ -133,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-            }
+            //}
         }else {
             setContentView(R.layout.not_connected);
         }
