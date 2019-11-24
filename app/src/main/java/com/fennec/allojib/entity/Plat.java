@@ -14,6 +14,11 @@ public class Plat {
     public Plat() {
     }
 
+    public Plat(String intituler)
+    {
+        this.intituler=intituler;
+    }
+
     public Plat(int id_rest, int id_cat, String intituler, String contenue, float prix, int accom, String img) {
         this.id_rest = id_rest;
         this.id_cat = id_cat;

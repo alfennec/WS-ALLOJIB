@@ -24,6 +24,7 @@ public class Menu_Activity extends AppCompatActivity {
 
     public static Menu_Activity main;
 
+    Button button_restaurant, button_superMarket, button_coursierExpress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,6 +32,21 @@ public class Menu_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         main = this;
+
+        /*** Button to set from activity **/
+        button_restaurant = (Button) findViewById(R.id.button_restaurant);
+        button_superMarket = (Button) findViewById(R.id.button_superMarket);
+        button_coursierExpress = (Button) findViewById(R.id.button_coursierExpress);
+
+        button_restaurant.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(main, Restaurant_Activity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }

@@ -32,7 +32,7 @@ public class JsonUrlRestaurant {
                     {
                         if(result != null)
                         {
-                            Log.d("TAG_JSON", "onClick: SEND URL " + result);
+                            //Log.d("TAG_JSON", "onClick: SEND URL " + result);
                             ConditionResult( result );
                         }
                     }

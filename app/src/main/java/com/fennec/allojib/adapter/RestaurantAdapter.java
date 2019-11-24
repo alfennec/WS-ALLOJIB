@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.fennec.allojib.R;
 import com.fennec.allojib.config.constant;
 import com.fennec.allojib.controller.Menu_Activity;
+import com.fennec.allojib.controller.Restaurant_Activity;
 import com.fennec.allojib.entity.Restaurant;
 import com.fennec.allojib.repository.RestaurantRepository;
 
@@ -88,9 +89,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             @Override
             public void onClick(View view)
             {
-                //Toast.makeText(Menu_Activity.main,myRestaurant.intituler, Toast.LENGTH_SHORT).show();
-                Menu_Activity.to_newIntent();
-
+                Restaurant_Activity.to_newIntent(myRestaurant.id);
             }
         });
 

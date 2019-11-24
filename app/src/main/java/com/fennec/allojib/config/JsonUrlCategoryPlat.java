@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.fennec.allojib.entity.CategoryPlat;
+import com.fennec.allojib.entity.Plat;
 import com.fennec.allojib.repository.CategoryPlatRepository;
 import com.fennec.allojib.repository.PlatRepository;
 import com.koushikdutta.async.future.FutureCallback;
@@ -12,6 +13,8 @@ import com.koushikdutta.ion.Ion;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class JsonUrlCategoryPlat {
 

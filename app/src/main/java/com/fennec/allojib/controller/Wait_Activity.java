@@ -1,11 +1,12 @@
-package com.fennec.allojib;
+package com.fennec.allojib.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import com.fennec.allojib.R;
 
 public class Wait_Activity extends AppCompatActivity {
 

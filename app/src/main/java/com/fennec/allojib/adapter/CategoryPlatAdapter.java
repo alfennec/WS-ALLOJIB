@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fennec.allojib.R;
 import com.fennec.allojib.controller.Menu_Activity;
+import com.fennec.allojib.controller.Restaurant_Activity;
 import com.fennec.allojib.entity.CategoryPlat;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
             public void onClick(View view)
             {
                 Toast.makeText(Menu_Activity.main,myCategoryPlat.id+" "+myCategoryPlat.intituler, Toast.LENGTH_SHORT).show();
-                Menu_Activity.update_adapter2(myCategoryPlat.id);
+                Restaurant_Activity.update_adapter2(myCategoryPlat.id);
             }
         });
     }
