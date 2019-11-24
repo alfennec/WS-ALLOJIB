@@ -1,5 +1,6 @@
 package com.fennec.allojib.adapter;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -12,8 +13,10 @@ import com.fennec.allojib.R;
 import com.fennec.allojib.config.constant;
 import com.fennec.allojib.controller.CategoryPlat_Activity;
 import com.fennec.allojib.controller.Menu_Activity;
+import com.fennec.allojib.entity.OrderPlat;
 import com.fennec.allojib.entity.Plat;
 import com.fennec.allojib.lab.Ingredient;
+import com.fennec.allojib.repository.OrderPlatRepository;
 
 public class PlatViewHolder extends ChildViewHolder
 {
@@ -31,7 +34,7 @@ public class PlatViewHolder extends ChildViewHolder
         add_plat = itemView.findViewById(R.id.add_plat);
     }
 
-    public void bind(Plat plat)
+    public void bind(final Plat plat)
     {
         intituler_plat.setText(plat.intituler);
         prix_plat.setText(""+plat.prix+" MAD");
@@ -44,7 +47,14 @@ public class PlatViewHolder extends ChildViewHolder
             @Override
             public void onClick(View v)
             {
-                CategoryPlat_Activity.OnclickAdd();
+                OrderPlat Current_order = new OrderPlat(plat.id,1);
+
+                OrderPlatRepository.list_orderPlat.add(Current_order);
+
+                CategoryPlat_Activity.OnclickAdd(plat.intituler+" Ajouté au Panier");
+
+                Log.d("TAG_JSON", "onClick: " + OrderPlatRepository.list_orderPlat.size()+" "+plat.intituler);
+
             }
         });
 

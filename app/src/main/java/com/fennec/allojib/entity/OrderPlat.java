@@ -12,6 +12,12 @@ public class OrderPlat {
 
     }
 
+    public OrderPlat(int id_plat, int quantity)
+    {
+        this.id_plat = id_plat;
+        this.quantity = quantity;
+    }
+
     public OrderPlat(int id_passOrder, int id_plat, int quantity)
     {
         this.id_plat = id_plat;

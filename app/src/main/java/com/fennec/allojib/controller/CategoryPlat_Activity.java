@@ -110,14 +110,17 @@ public class CategoryPlat_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+
+                Intent intent = new Intent(main, Order_Plat_Activity.class);
+                startActivity(intent);
             }
         });
     }
 
-    public static void OnclickAdd()
+    public static void OnclickAdd(String msg)
     {
-        Toast.makeText(main," Click image view", Toast.LENGTH_SHORT).show();
+        Toast.makeText(main,msg, Toast.LENGTH_SHORT).show();
     }
 }

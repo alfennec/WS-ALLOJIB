@@ -59,7 +59,7 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position)
     {
-        final CategoryPlat  myCategoryPlat = list.get(position);
+        final CategoryPlat myCategoryPlat = list.get(position);
         holder.intituler.setText(myCategoryPlat.intituler);
 
         holder.parent.setOnClickListener(new View.OnClickListener()

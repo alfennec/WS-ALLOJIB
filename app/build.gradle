@@ -38,5 +38,4 @@ dependencies {
     /* my expandablerecyclerview */
     implementation 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
 
-
 }
