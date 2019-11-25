@@ -34,4 +34,12 @@ public class Order_Plat_Activity extends AppCompatActivity {
         orderPlatAdapter = new OrderPlatAdapter(OrderPlatRepository.list_orderPlat);
         recyclerView.setAdapter(orderPlatAdapter);
     }
+
+    public static void getNewAdpter()
+    {
+        /** adapter  **/
+
+        orderPlatAdapter = new OrderPlatAdapter(OrderPlatRepository.list_orderPlat);
+        recyclerView.setAdapter(orderPlatAdapter);
+    }
 }
