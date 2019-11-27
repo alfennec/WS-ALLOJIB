@@ -30,17 +30,51 @@
             android:layout_weight="3" >
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/btn_radio_l1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Livrer dès que possible" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/btn_radio_l2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Programmer la livraison" />
         </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/in_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="DATE" />
+
+            <EditText
+                android:id="@+id/in_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Temps" />
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textView2"
@@ -55,13 +89,13 @@
             android:layout_weight="3" >
 
             <RadioButton
-                android:id="@+id/radioButton3"
+                android:id="@+id/btn_radio_moi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Moi" />
 
             <RadioButton
-                android:id="@+id/radioButton4"
+                android:id="@+id/btn_radio_autre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Autre" />
@@ -73,6 +107,7 @@
             android:layout_weight="3">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/personne_conserner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nom de la personne conserner" />
@@ -84,6 +119,7 @@
             android:layout_weight="3">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tel_personne"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Numéro de la personne conserner" />
@@ -97,7 +133,7 @@
             android:text="Adresse" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_maps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -113,6 +149,13 @@
                 android:layout_height="wrap_content"
                 android:hint="Note" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Finalizer la commande" />
 
     </LinearLayout>
 
