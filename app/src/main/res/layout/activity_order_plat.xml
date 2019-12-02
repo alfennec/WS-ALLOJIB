@@ -125,12 +125,17 @@
                 android:hint="Numéro de la personne conserner" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/textView10"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Adresse" />
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/adresse_maps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Adresse" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_maps"
@@ -145,13 +150,14 @@
             android:layout_weight="3">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/note_client"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Note" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_valider_commande"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"

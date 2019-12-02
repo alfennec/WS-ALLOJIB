@@ -15,12 +15,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.fennec.allojib.R;
 import com.fennec.allojib.adapter.CategoryPlatAdapter;
 import com.fennec.allojib.adapter.OrderPlatAdapter;
+import com.fennec.allojib.entity.PassOrderPlat;
 import com.fennec.allojib.repository.CategoryPlatRepository;
+import com.fennec.allojib.repository.ClientRepository;
 import com.fennec.allojib.repository.OrderPlatRepository;
+import com.fennec.allojib.repository.PassOrderPlatRepository;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -32,11 +36,11 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
     public static Order_Plat_Activity main;
 
-    public Button btn_maps;
+    public Button btn_maps,btn_valider_commande;
 
     public Button btnDatePicker, btnTimePicker;
     public EditText txtDate, txtTime;
-    public TextInputEditText personne_conserner, tel_personne;
+    public TextInputEditText personne_conserner, tel_personne, adresse_maps, note_client;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -49,7 +53,7 @@ public class Order_Plat_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_order_plat);
         main = this;
 
-        /** adapter  **/
+        /** adapter for test we have to improve our self for this app  **/
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(lm);
@@ -71,6 +75,11 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
         personne_conserner = (TextInputEditText)findViewById(R.id.personne_conserner);
         tel_personne = (TextInputEditText)findViewById(R.id.tel_personne);
+
+        adresse_maps = (TextInputEditText)findViewById(R.id.adresse_maps);
+        note_client = (TextInputEditText)findViewById(R.id.note_client);
+
+        btn_valider_commande = (Button) findViewById(R.id.btn_valider_commande);
 
         btnDatePicker.setVisibility(View.GONE);
         btnTimePicker.setVisibility(View.GONE);
@@ -200,6 +209,54 @@ public class Order_Plat_Activity extends AppCompatActivity {
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
+            }
+        });
+
+
+        /*** on finalizer la commande **/
+
+        btn_valider_commande.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                PassOrderPlat current_order = new PassOrderPlat();
+
+                current_order.total = OrderPlatRepository.getTotalOrder();
+
+                if(btn_radio_l1.isChecked())
+                {
+                    current_order.mode_livraison = 1;
+                    current_order.date_order = "vide";
+                    current_order.time_order = "vide";
+                }else {
+                    current_order.mode_livraison = 2;
+                    current_order.date_order = txtDate.getText().toString();
+                    current_order.time_order = txtTime.getText().toString();
+                }
+
+                if(btn_radio_moi.isChecked())
+                {
+                    current_order.collecteur = 1;
+                    current_order.nom_collecteur = "vide";
+                    current_order.num_collecteur = "vide";
+                }else {
+                    current_order.collecteur = 2;
+                    current_order.nom_collecteur = personne_conserner.getText().toString();
+                    current_order.num_collecteur = tel_personne.getText().toString();
+                }
+
+                current_order.adresse = adresse_maps.getText().toString();
+                current_order.note = note_client.getText().toString();
+
+                current_order.id_client = ClientRepository.main_Client.id;
+                current_order.situation = 1;
+
+
+                PassOrderPlatRepository.list_passOrderPlat.add(current_order);
+
+                Toast.makeText(main,"total : "+current_order.total, Toast.LENGTH_SHORT ).show();
+
             }
         });
 
