@@ -8,12 +8,14 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -21,15 +23,19 @@ import android.widget.Toast;
 import com.fennec.allojib.R;
 import com.fennec.allojib.adapter.CategoryPlatAdapter;
 import com.fennec.allojib.adapter.OrderPlatAdapter;
+import com.fennec.allojib.adapter.RestaurantAdapter;
 import com.fennec.allojib.config.JsonUrlClient;
+import com.fennec.allojib.config.JsonUrlOrderPlat;
 import com.fennec.allojib.config.JsonUrlPassOrderPlat;
 import com.fennec.allojib.config.JsonUrlPlat;
 import com.fennec.allojib.config.constant;
+import com.fennec.allojib.entity.OrderPlat;
 import com.fennec.allojib.entity.PassOrderPlat;
 import com.fennec.allojib.repository.CategoryPlatRepository;
 import com.fennec.allojib.repository.ClientRepository;
 import com.fennec.allojib.repository.OrderPlatRepository;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
+import com.fennec.allojib.repository.RestaurantRepository;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -50,6 +56,12 @@ public class Order_Plat_Activity extends AppCompatActivity {
     private int mYear, mMonth, mDay, mHour, mMinute;
 
     public RadioButton btn_radio_l1,btn_radio_l2,btn_radio_moi,btn_radio_autre;
+
+    public Handler handler = new Handler();
+    public int progress = 0;
+    public ProgressBar progressBar4;
+
+    public int lastPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -85,6 +97,10 @@ public class Order_Plat_Activity extends AppCompatActivity {
         note_client = (TextInputEditText)findViewById(R.id.note_client);
 
         btn_valider_commande = (Button) findViewById(R.id.btn_valider_commande);
+
+        progressBar4 = (ProgressBar) findViewById(R.id.progressBar4);
+        progressBar4.setMax(100);
+        progress = progressBar4.getProgress();
 
         btnDatePicker.setVisibility(View.GONE);
         btnTimePicker.setVisibility(View.GONE);
@@ -258,7 +274,7 @@ public class Order_Plat_Activity extends AppCompatActivity {
                 current_order.situation = 1;
 
 
-                int lastPosition = PassOrderPlatRepository.list_passOrderPlat.size();
+                lastPosition = PassOrderPlatRepository.list_passOrderPlat.size();
                 PassOrderPlatRepository.list_passOrderPlat.add(current_order);
 
                 /*** set order in server **/
@@ -291,6 +307,71 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
                 /** SET THE THREAD FOR SEND DAETAIL ORDER PLAT TO SERVER */
                 //.....
+                new Thread(new Runnable()
+                {
+                    public void run()
+                    {
+                        while (progress < 100)
+                        {
+                            progress += 1;
+                            handler.post(new Runnable()
+                            {
+                                public void run()
+                                {
+                                    // set progress
+                                    progressBar4.setProgress(progress);
+                                }
+                            });
+
+                            try
+                            {
+                                Thread.sleep(50);
+                            } catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                        // Progress finished, re-enter UI thread and set text
+                        handler.post(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                // handler after sleep
+                                progressBar4.setProgress(100);
+
+                                /*** set detaille order in server **/
+
+                                //localhost/livraison/json/setOrderPlat.php?id_passOrder=1&id_plat=1&quantity=5
+
+                                //OrderPlat current_order = new OrderPlat();
+                                //current_order.id_plat =
+
+                                for (int i = 0; i < OrderPlatRepository.list_orderPlat.size(); i++)
+                                {
+                                    OrderPlatRepository.list_orderPlat.get(i).id_passOrder = PassOrderPlatRepository.list_passOrderPlat.get(lastPosition).id;
+
+                                    String url_informations = constant.url_host+"json/setOrderPlat.php?";
+
+                                    String id_passOrder = "id_passOrder="+OrderPlatRepository.list_orderPlat.get(i).id_passOrder;
+                                    String id_plat = "&id_plat="+OrderPlatRepository.list_orderPlat.get(i).id_plat;
+                                    String quantity = "&quantity="+OrderPlatRepository.list_orderPlat.get(i).quantity;
+
+
+                                    url_informations = url_informations+id_passOrder+id_plat+quantity;
+
+                                    Log.d("TAG_JSON_ORDER_DETAIL", "TO SEND "+ url_informations);
+
+                                    JsonUrlOrderPlat jsonUrlOrderPlat = new JsonUrlOrderPlat(url_informations, main);
+
+                                }
+
+                                Toast.makeText(main,"Work server detaill : ", Toast.LENGTH_SHORT ).show();
+
+                            }
+                        });
+                    }
+                }).start();
 
             }
         });

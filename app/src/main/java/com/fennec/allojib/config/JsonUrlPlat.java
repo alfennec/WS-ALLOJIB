@@ -1,6 +1,7 @@
 package com.fennec.allojib.config;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.fennec.allojib.entity.CategoryPlat;
 import com.fennec.allojib.entity.Plat;
@@ -43,6 +44,7 @@ public class JsonUrlPlat {
         if(result.equals("succes"))
         {
             result_succes = true;
+            Log.d("TAG_JSON", "onClick: succes " + result);
         }
         else if(result.equals("error"))
         {
