@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -20,6 +21,10 @@ import android.widget.Toast;
 import com.fennec.allojib.R;
 import com.fennec.allojib.adapter.CategoryPlatAdapter;
 import com.fennec.allojib.adapter.OrderPlatAdapter;
+import com.fennec.allojib.config.JsonUrlClient;
+import com.fennec.allojib.config.JsonUrlPassOrderPlat;
+import com.fennec.allojib.config.JsonUrlPlat;
+import com.fennec.allojib.config.constant;
 import com.fennec.allojib.entity.PassOrderPlat;
 import com.fennec.allojib.repository.CategoryPlatRepository;
 import com.fennec.allojib.repository.ClientRepository;
@@ -253,9 +258,39 @@ public class Order_Plat_Activity extends AppCompatActivity {
                 current_order.situation = 1;
 
 
+                int lastPosition = PassOrderPlatRepository.list_passOrderPlat.size();
                 PassOrderPlatRepository.list_passOrderPlat.add(current_order);
 
+                /*** set order in server **/
+
+                //localhost/livraison/json/setPassOrderPlat.php?total=120&mode_livraison=1&date_order=vide&time_order=vide&collecteur=2
+                //&nom_collecteur=med&num_collecteur=0611336628&adresse=hayoujda&note=rien&id_client=1&situation=1
+
+
+                String url_informations = constant.url_host+"json/setPassOrderPlat.php?";
+
+                String total = "total="+current_order.total;
+                String mode_livraison = "&mode_livraison="+current_order.mode_livraison;
+                String date_order = "&date_order="+current_order.date_order;
+                String time_order = "&time_order="+current_order.time_order;
+                String collecteur = "&collecteur="+current_order.collecteur;
+                String nom_collecteur = "&nom_collecteur="+current_order.nom_collecteur;
+                String num_collecteur = "&num_collecteur="+current_order.num_collecteur;
+                String adresse = "&adresse="+current_order.adresse;
+                String note = "&note="+current_order.note ;
+                String id_client = "&id_client="+current_order.id_client;
+                String situation = "&situation="+current_order.situation;
+
+                url_informations = url_informations+total+mode_livraison+date_order+time_order+collecteur+nom_collecteur+num_collecteur+adresse+note+id_client+situation;
+
+                //Log.d("TAG_JSON_ORDER", "TO SEND "+ url_informations);
+
+                JsonUrlPassOrderPlat jsonUrlPassOrderPlat = new JsonUrlPassOrderPlat(url_informations, main, lastPosition);
+
                 Toast.makeText(main,"total : "+current_order.total, Toast.LENGTH_SHORT ).show();
+
+                /** SET THE THREAD FOR SEND DAETAIL ORDER PLAT TO SERVER */
+                //.....
 
             }
         });
