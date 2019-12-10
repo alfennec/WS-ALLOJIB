@@ -3,7 +3,9 @@ package com.fennec.allojib.config;
 import android.content.Context;
 import android.util.Log;
 
+import com.fennec.allojib.controller.MainActivity;
 import com.fennec.allojib.entity.Client;
+import com.fennec.allojib.myInterface.IonHandler;
 import com.fennec.allojib.repository.ClientRepository;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -12,10 +14,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonUrlClient {
+public class JsonUrlClient implements IonHandler {
 
     public boolean result_succes = false;
     public boolean result_error = false;
+
+    @Override
+    public void onSucces(Object obj)
+    {
+        ConditionResult(obj.toString());
+
+        Log.d("TAG_JSON", "onClick: SEND URL " + obj.toString());
+
+        if(!result_error)
+        {
+            MainActivity.OnSuccesLogin();
+        }else {
+                MainActivity.OnFailedLogin();
+        }
+
+    }
+
+    @Override
+    public void onFailed(Object obj)
+    {
+
+    }
 
     public JsonUrlClient(String link , final Context ctx)
     {
@@ -30,12 +54,18 @@ public class JsonUrlClient {
                         if(result != null)
                         {
                             //Log.d("TAG_JSON", "onClick: SEND URL " + result);
-                            ConditionResult( result );
-                        }
+                            onSucces( result );
+
+                        }else
+                            {
+                                onFailed(-1);
+                            }
                     }
                 });
 
     }
+
+
 
     public void ConditionResult(String result)
     {

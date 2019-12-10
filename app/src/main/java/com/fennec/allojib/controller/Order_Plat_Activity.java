@@ -366,7 +366,12 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
                                 }
 
-                                Toast.makeText(main,"Work server detaill : ", Toast.LENGTH_SHORT ).show();
+                                /** oppen new intent to detaills of command **/
+
+                                Intent intent = new Intent(main, Commande_Activity.class);
+                                startActivity(intent);
+
+                                main.finish();
 
                             }
                         });

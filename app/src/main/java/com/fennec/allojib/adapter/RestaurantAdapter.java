@@ -82,7 +82,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             holder.situation.setText("Fermer");
         }
 
-        Glide.with(Menu_Activity.main).load(constant.url_host+"/upload/restaurant/"+myRestaurant.restaurant_image).into(holder.image_restaurant);
+        Glide.with(Restaurant_Activity.main).load(constant.url_host+"/upload/restaurant/"+myRestaurant.restaurant_image).into(holder.image_restaurant);
+        Log.d("TAG_GLIDE", "onBindViewHolder: "+constant.url_host+"/upload/restaurant/"+myRestaurant.restaurant_image);
 
         holder.parent.setOnClickListener(new View.OnClickListener()
         {

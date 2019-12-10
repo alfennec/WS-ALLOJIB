@@ -51,68 +51,41 @@ public class Restaurant_Activity extends AppCompatActivity {
         JsonUrlRestaurant jsonRestaurant = new JsonUrlRestaurant(url_informations+"tbl_retaurant", main);
         JsonUrlCategoryPlat jsonUrlCategoryPlat = new JsonUrlCategoryPlat(url_informations+"tbl_category_plat", main);
 
-        progressBar3 = (ProgressBar) findViewById(R.id.progressBar3);
-        progressBar3.setMax(100);
-        progress = progressBar3.getProgress();
+    }
 
-        new Thread(new Runnable()
-        {
-            public void run()
-            {
-                while (progress < 100)
-                {
-                    progress += 1;
-                    handler.post(new Runnable()
-                    {
-                        public void run()
-                        {
-                            progressBar3.setProgress(progress);
-                        }
-                    });
+    public static void onLoadCategory()
+    {
+        /** adapter 1 **/
+        recyclerView1 = (RecyclerView) main.findViewById(R.id.recyclerView1);
+        LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView1.setLayoutManager(lm);
 
-                    try
-                    {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-                // Progress finished, re-enter UI thread and set text
-                handler.post(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        progressBar3.setProgress(100);
-                        progressBar3.setVisibility(progressBar3.GONE);
+        categoryPlatAdapter = new CategoryPlatAdapter(CategoryPlatRepository.list_categoryPlat);
+        recyclerView1.setAdapter(categoryPlatAdapter);
+    }
 
-                        /** adapter 1 **/
-                        recyclerView1 = (RecyclerView)findViewById(R.id.recyclerView1);
-                        LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.HORIZONTAL, false);
-                        recyclerView1.setLayoutManager(lm);
+    public static void onLoadRestaurant()
+    {
+        /** adapter 2 **/
+        recyclerView2 = (RecyclerView) main.findViewById(R.id.recyclerView2);
+        LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.VERTICAL, false);
+        recyclerView2.setLayoutManager(lm);
 
-                        categoryPlatAdapter = new CategoryPlatAdapter(CategoryPlatRepository.list_categoryPlat);
-                        recyclerView1.setAdapter(categoryPlatAdapter);
-
-                        /** adapter 2 **/
-                        recyclerView2 = (RecyclerView)findViewById(R.id.recyclerView2);
-                        lm = new LinearLayoutManager(main, LinearLayoutManager.VERTICAL, false);
-                        recyclerView2.setLayoutManager(lm);
-
-                        restaurantAdapter = new RestaurantAdapter(RestaurantRepository.list_restaurant);
-                        recyclerView2.setAdapter(restaurantAdapter);
-
-                    }
-                });
-            }
-        }).start();
+        restaurantAdapter = new RestaurantAdapter(RestaurantRepository.list_restaurant);
+        recyclerView2.setAdapter(restaurantAdapter);
     }
 
     public static void update_adapter2(int id)
     {
-        restaurantAdapter = new RestaurantAdapter(RestaurantRepository.RestaurantByCategory(id));
-        recyclerView2.setAdapter(restaurantAdapter);
+        if(id == 0)
+        {
+            restaurantAdapter = new RestaurantAdapter(RestaurantRepository.list_restaurant);
+            recyclerView2.setAdapter(restaurantAdapter);
+        }else{
+            restaurantAdapter = new RestaurantAdapter(RestaurantRepository.RestaurantByCategory(id));
+            recyclerView2.setAdapter(restaurantAdapter);
+        }
+
     }
 
     public static void to_newIntent(int id_rest)

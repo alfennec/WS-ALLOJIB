@@ -98,14 +98,14 @@ public class Register_form extends AppCompatActivity {
                     ///livraison/json/setClient.php?email=bermod@gmail.com&pass=123456&nom=med&prenom=ber&tel=0611336605&adresse=haylaymoune&ville=oujda&sexe=1
 
                     String url_informations = "livraison/json/setClient.php?";
-                    String email = "email="+new_Client.email;
-                    String pass = "&pass="+new_Client.pass;
-                    String nom = "&nom="+new_Client.nom;
-                    String prenom = "&prenom="+new_Client.prenom;
-                    String tel = "&tel="+new_Client.tel;
-                    String adresse = "&adresse="+new_Client.adresse;
-                    String ville = "&ville="+new_Client.ville;
-                    String sexe = "&sexe="+new_Client.sexe;
+                    String email            = "email="+new_Client.email;
+                    String pass             = "&pass="+new_Client.pass;
+                    String nom              = "&nom="+new_Client.nom;
+                    String prenom           = "&prenom="+new_Client.prenom;
+                    String tel              = "&tel="+new_Client.tel;
+                    String adresse          = "&adresse="+new_Client.adresse;
+                    String ville            = "&ville="+new_Client.ville;
+                    String sexe             = "&sexe="+new_Client.sexe;
 
                     url_informations = url_informations+email+pass+nom+prenom+tel+adresse+ville+sexe;
 

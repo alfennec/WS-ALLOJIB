@@ -3,8 +3,10 @@ package com.fennec.allojib.config;
 import android.content.Context;
 import android.util.Log;
 
+import com.fennec.allojib.controller.Restaurant_Activity;
 import com.fennec.allojib.entity.Client;
 import com.fennec.allojib.entity.Restaurant;
+import com.fennec.allojib.myInterface.IonHandler;
 import com.fennec.allojib.repository.ClientRepository;
 import com.fennec.allojib.repository.PlatRepository;
 import com.fennec.allojib.repository.RestaurantRepository;
@@ -15,11 +17,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonUrlRestaurant {
+public class JsonUrlRestaurant implements IonHandler {
 
     public boolean result_succes = false;
     public boolean result_error = false;
 
+
+    @Override
+    public void onSucces(Object obj)
+    {
+        Restaurant_Activity.onLoadRestaurant();
+    }
+
+    @Override
+    public void onFailed(Object obj)
+    {
+
+    }
     public JsonUrlRestaurant(String link , final Context ctx)
     {
         Ion.with(ctx)
@@ -53,6 +67,7 @@ public class JsonUrlRestaurant {
         else {
             result_succes = true;
             parse_data(result);
+            onSucces(result.toString());
         }
     }
 

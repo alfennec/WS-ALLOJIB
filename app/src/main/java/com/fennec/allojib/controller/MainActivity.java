@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -20,11 +21,12 @@ import com.fennec.allojib.config.JsonUrlClient;
 import com.fennec.allojib.config.JsonUrlPlat;
 import com.fennec.allojib.config.JsonUrlRestaurant;
 import com.fennec.allojib.config.constant;
+import com.fennec.allojib.repository.ClientRepository;
 
 public class MainActivity extends AppCompatActivity {
 
     public static MainActivity main;
-    String MY_PREFS_NAME = "first_log";
+    public static String MY_PREFS_NAME = "first_log";
 
     public ProgressBar progressBar2;
     public int progress = 0;
@@ -44,14 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
         if(isNetworkConnected())
         {
-            /*if(isSharedPreferences())
+            if(isSharedPreferences())
             {
                 Intent intent = new Intent(main, Menu_Activity.class);
                 startActivity(intent);
 
                 main.finish();
             }
-            else{*/
+            else{
                 setContentView(R.layout.login_form);
 
                 editText_email = (EditText) findViewById(R.id.editText_email);
@@ -77,63 +79,41 @@ public class MainActivity extends AppCompatActivity {
                         url_informations = constant.url_host+url_informations+email+pass;
 
                         jsonClient = new JsonUrlClient(url_informations, main);
-
-                        new Thread(new Runnable()
-                        {
-                            public void run()
-                            {
-                                while (progress < 100)
-                                {
-                                    progress += 1;
-                                    handler.post(new Runnable()
-                                    {
-                                        public void run()
-                                        {
-                                            progressBar2.setProgress(progress);
-                                        }
-                                    });
-
-                                    try
-                                    {
-                                        // Sleep for 100 milliseconds to show the progress slowly.
-                                        Thread.sleep(50);
-                                    } catch (InterruptedException e)
-                                    {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                // Progress finished, re-enter UI thread and set text
-                                handler.post(new Runnable()
-                                {
-                                    @Override
-                                    public void run()
-                                    {
-                                        progressBar2.setProgress(100);
-
-                                        if(!jsonClient.result_error)
-                                        {
-                                            Toast.makeText(main,"Connexion faite avec succés", Toast.LENGTH_SHORT).show();
-
-                                            Intent intent = new Intent(main, Menu_Activity.class);
-                                            startActivity(intent);
-
-                                            main.finish();
-
-                                        }else {
-                                            Toast.makeText(main,"Email ou mot de pass incorrect ", Toast.LENGTH_SHORT).show();
-                                            }
-
-                                    }
-                                });
-                            }
-                        }).start();
                     }
                 });
 
-            //}
+            }
         }else {
             setContentView(R.layout.not_connected);
         }
+    }
+
+    public static void OnSuccesLogin()
+    {
+        Toast.makeText(main,"Connexion faite avec succés", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(main, Menu_Activity.class);
+        main.startActivity(intent);
+
+        SharedPreferences prefs = main.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor edit= prefs.edit();
+
+        edit.putInt("id", ClientRepository.main_Client.id);
+        edit.putString("email", ClientRepository.main_Client.email);
+        edit.putString("nom", ClientRepository.main_Client.nom);
+        edit.putString("prenom", ClientRepository.main_Client.prenom);
+        edit.putString("tel", ClientRepository.main_Client.tel);
+        edit.putString("adresse", ClientRepository.main_Client.adresse);
+        edit.putString("ville", ClientRepository.main_Client.ville);
+        edit.putInt("sexe", ClientRepository.main_Client.sexe);
+
+        edit.commit();
+        main.finish();
+    }
+
+    public static void OnFailedLogin()
+    {
+        Toast.makeText(main,"Email ou mot de pass incorrect ", Toast.LENGTH_SHORT).show();
     }
 
     public boolean isSharedPreferences()
@@ -150,16 +130,15 @@ public class MainActivity extends AppCompatActivity {
 
         if(id == 0 && email.equals("vide"))
         {
-            return true;
-        }else {
             return false;
+        }else {
+            return true;
         }
     }
 
     private boolean isNetworkConnected()
     {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 

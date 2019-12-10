@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.fennec.allojib.entity.Client;
+import com.fennec.allojib.myInterface.IonHandler;
 import com.fennec.allojib.repository.ClientRepository;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -12,9 +13,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Json_url {
+public class Json_url implements IonHandler {
 
     public int last_id=0;
+
+    @Override
+    public void onSucces(Object obj)
+    {
+        last_id = Integer.parseInt(obj.toString());
+        getJsonClient(obj.toString());
+    }
+
+    @Override
+    public void onFailed(Object obj)
+    {
+
+    }
 
     public Json_url(String link , final Context ctx)
     {
@@ -31,11 +45,10 @@ public class Json_url {
                             {
                                 if(result == "error")
                                 {
-
+                                    onFailed("error");
                                 }
                                 else {
-                                    last_id = Integer.parseInt(result);
-                                    //getJsonClient( result );
+                                    onSucces(result);
                                 }
                             }
                         }

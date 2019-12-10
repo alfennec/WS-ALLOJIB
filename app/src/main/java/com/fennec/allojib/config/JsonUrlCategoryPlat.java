@@ -3,8 +3,10 @@ package com.fennec.allojib.config;
 import android.content.Context;
 import android.util.Log;
 
+import com.fennec.allojib.controller.Restaurant_Activity;
 import com.fennec.allojib.entity.CategoryPlat;
 import com.fennec.allojib.entity.Plat;
+import com.fennec.allojib.myInterface.IonHandler;
 import com.fennec.allojib.repository.CategoryPlatRepository;
 import com.fennec.allojib.repository.PlatRepository;
 import com.koushikdutta.async.future.FutureCallback;
@@ -16,10 +18,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class JsonUrlCategoryPlat {
+public class JsonUrlCategoryPlat implements IonHandler {
 
     public boolean result_succes = false;
     public boolean result_error = false;
+
+
+    @Override
+    public void onSucces(Object obj)
+    {
+        Restaurant_Activity.onLoadCategory();
+    }
+
+    @Override
+    public void onFailed(Object obj)
+    {
+
+    }
+
 
     public JsonUrlCategoryPlat(String link , final Context ctx)
     {
@@ -54,15 +70,20 @@ public class JsonUrlCategoryPlat {
         else {
             result_succes = true;
             parse_data(result);
+            onSucces(result.toString());
         }
     }
 
     public void parse_data(String result)
     {
+
+        CategoryPlatRepository.list_categoryPlat.add(new CategoryPlat(0,"Tout"));
+
         try
         {
             //JSONObject jObject = new JSONObject(result);
             JSONArray jArray = new JSONArray(result);
+
 
             for (int i=0; i < jArray.length(); i++)
             {
@@ -72,8 +93,8 @@ public class JsonUrlCategoryPlat {
                 {
                     JSONObject oneObject = jArray.getJSONObject(i);
 
-                    json_categoryPlat.id      = Integer.parseInt(oneObject.getString("id"));
-                    json_categoryPlat.intituler   = oneObject.getString("intituler");
+                    json_categoryPlat.id        = Integer.parseInt(oneObject.getString("id"));
+                    json_categoryPlat.intituler = oneObject.getString("intituler");
 
                 }
                 catch (JSONException e)
