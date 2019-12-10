@@ -1,5 +1,6 @@
 package com.fennec.allojib.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,9 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fennec.allojib.R;
+import com.fennec.allojib.controller.CategoryPlat_Activity;
 import com.fennec.allojib.controller.Menu_Activity;
 import com.fennec.allojib.controller.Restaurant_Activity;
 import com.fennec.allojib.entity.CategoryPlat;
@@ -61,6 +64,12 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
     {
         final CategoryPlat myCategoryPlat = list.get(position);
         holder.intituler.setText(myCategoryPlat.intituler);
+
+        if(position == 0)
+        {
+            holder.intituler.setBackgroundColor(ContextCompat.getColor(CategoryPlat_Activity.main, R.color.colorPrimaryDark));
+            holder.intituler.setTextColor(Color.argb(255,255,255,255));
+        }
 
         holder.parent.setOnClickListener(new View.OnClickListener()
         {

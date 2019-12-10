@@ -16,6 +16,7 @@
         android:paddingVertical="8dp"
         android:gravity="center"
         android:textColor="@color/colorPrimary"
-        android:text="TextView" />
+        android:text="TextView"
+        />
 
 </androidx.cardview.widget.CardView>

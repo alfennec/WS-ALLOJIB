@@ -54,11 +54,11 @@ public class CategoryPlat_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_plat);
         main = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Choisissez vos plats");
         setSupportActionBar(toolbar);
 
         Bundle extras = getIntent().getExtras();
         id_rest = extras.getInt("id_rest");
-        Log.d("TAG_JSON", "onClick: SEND URL -->" + id_rest);
 
         /*** traitement get our donnees form server **/
 
@@ -99,7 +99,7 @@ public class CategoryPlat_Activity extends AppCompatActivity {
         }
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        ExCategoryPlatAdapter adapter = new ExCategoryPlatAdapter(main, /*CategoryPlatRepository.list_categoryPlat*/current_categoryPlat);
+        ExCategoryPlatAdapter adapter = new ExCategoryPlatAdapter(main, current_categoryPlat);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(main));
 
@@ -110,9 +110,6 @@ public class CategoryPlat_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-
                 Intent intent = new Intent(main, Order_Plat_Activity.class);
                 startActivity(intent);
             }
