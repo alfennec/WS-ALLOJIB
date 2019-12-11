@@ -33,7 +33,7 @@ public class OrderPlatAdapter extends RecyclerView.Adapter<OrderPlatAdapter.MyVi
         public View parent;
         public RecyclerView recyclerView;
         public EditText edit_quatity;
-        public Button btn_incrise,btn_dicrese;
+        public ImageButton btn_incrise,btn_dicrese;
         public ImageButton btn_delete;
 
         public MyViewHolder(View view)
@@ -43,8 +43,8 @@ public class OrderPlatAdapter extends RecyclerView.Adapter<OrderPlatAdapter.MyVi
             plat_name = (TextView) view.findViewById(R.id.plat_name);
             plat_prix = (TextView) view.findViewById(R.id.plat_prix);
             edit_quatity = (EditText) view.findViewById(R.id.edit_quatity);
-            btn_incrise= (Button) view.findViewById(R.id.btn_incrise);
-            btn_dicrese = (Button) view.findViewById(R.id.btn_dicrese);
+            btn_incrise= (ImageButton) view.findViewById(R.id.btn_incrise);
+            btn_dicrese = (ImageButton) view.findViewById(R.id.btn_dicrese);
             btn_delete = (ImageButton) view.findViewById(R.id.btn_delete);
         }
     }

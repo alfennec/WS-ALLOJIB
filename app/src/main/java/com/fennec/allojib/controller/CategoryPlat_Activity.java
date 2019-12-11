@@ -54,7 +54,7 @@ public class CategoryPlat_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_plat);
         main = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Choisissez vos plats");
+        toolbar.setTitle("Vos Plats");
         setSupportActionBar(toolbar);
 
         Bundle extras = getIntent().getExtras();

@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="3dp">
+    android:padding="5dp"
+    android:background="@drawable/rounded_corner_item"
+    android:layout_marginTop="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/plat_prix"
@@ -47,7 +52,18 @@
                 android:id="@+id/btn_delete"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:srcCompat="@android:drawable/ic_menu_delete" />
+                android:background="@null"
+                app:srcCompat="@drawable/ic_delete_black_24dp"
+                android:tint="@color/colorAccent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -55,37 +71,29 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_weight="0" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
+            <ImageButton
                 android:id="@+id/btn_dicrese"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:text="-" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:tint="@color/colorAccent"
+                app:srcCompat="@drawable/ic_remove_black_24dp" />
 
             <EditText
                 android:id="@+id/edit_quatity"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned|number" />
+                android:inputType="numberSigned|number"
+                android:gravity="center"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_incrise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:tint="@color/colorAccent"
+                app:srcCompat="@drawable/ic_add_black_24dp" />
         </LinearLayout>
 
     </LinearLayout>

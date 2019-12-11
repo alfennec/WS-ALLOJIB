@@ -65,9 +65,9 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
         final CategoryPlat myCategoryPlat = list.get(position);
         holder.intituler.setText(myCategoryPlat.intituler);
 
-        if(position == 0)
+        if(myCategoryPlat.id == 0)
         {
-            holder.intituler.setBackgroundColor(ContextCompat.getColor(CategoryPlat_Activity.main, R.color.colorPrimaryDark));
+            holder.intituler.setBackgroundColor(Color.argb(255,200,2,34));
             holder.intituler.setTextColor(Color.argb(255,255,255,255));
         }
 
@@ -76,7 +76,7 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(Menu_Activity.main,myCategoryPlat.id+" "+myCategoryPlat.intituler, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Menu_Activity.main,""+myCategoryPlat.intituler, Toast.LENGTH_SHORT).show();
                 Restaurant_Activity.update_adapter2(myCategoryPlat.id);
             }
         });

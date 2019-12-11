@@ -7,7 +7,9 @@
     android:background="@drawable/back3"
     android:orientation="vertical"
     android:padding="3dp"
-    tools:context=".controller.Menu_Activity">
+    tools:context=".controller.Menu_Activity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
 
     <androidx.cardview.widget.CardView

@@ -3,12 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="3dp">
+    android:padding="5dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Votre Commande : "
+            android:textSize="24sp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -19,10 +31,14 @@
 
         <TextView
             android:id="@+id/textView"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Mode de livraison" />
+            android:text="Mode de livraison : "
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -59,7 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="DATE" />
+                android:text="DATE"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_corner_button"/>
 
             <EditText
                 android:id="@+id/in_time"
@@ -72,16 +90,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Temps" />
+                android:text="Temps"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_corner_button"/>
         </LinearLayout>
 
 
         <TextView
             android:id="@+id/textView2"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Collecteur" />
+            android:text="Collecteur : "
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -142,7 +166,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Ajouter une adresse" />
+            android:text="Ajouter une adresse"
+            android:textColor="#fff"
+            android:background="@drawable/rounded_corner_button"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -168,7 +194,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Finalizer la commande" />
+            android:text="Finalizer la commande"
+            android:textSize="24dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_corner_button"/>
 
     </LinearLayout>
 
