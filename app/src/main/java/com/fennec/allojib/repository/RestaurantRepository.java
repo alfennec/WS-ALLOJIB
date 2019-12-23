@@ -44,4 +44,19 @@ public class RestaurantRepository {
 
         return current_restaurant;
     }
+
+    public static ArrayList<Restaurant> RestaurantByName(String name)
+    {
+        ArrayList<Restaurant> current_restaurant = new ArrayList<>();
+
+        for (int i = 0; i < list_restaurant.size(); i++)
+        {
+            if(RestaurantRepository.list_restaurant.get(i).intituler.equals(name))
+            {
+                current_restaurant.add(RestaurantRepository.list_restaurant.get(i));
+            }
+        }
+
+        return current_restaurant;
+    }
 }

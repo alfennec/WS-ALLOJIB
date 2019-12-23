@@ -2,7 +2,9 @@ package com.fennec.allojib.config;
 
 import android.content.Context;
 
+import com.fennec.allojib.controller.Order_Plat_Activity;
 import com.fennec.allojib.entity.Client;
+import com.fennec.allojib.myInterface.IonHandler;
 import com.fennec.allojib.repository.ClientRepository;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -11,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonUrlOrderPlat {
+public class JsonUrlOrderPlat implements IonHandler {
 
     public boolean result_succes = false;
     public boolean result_error = false;
@@ -29,10 +31,23 @@ public class JsonUrlOrderPlat {
                         if(result != null)
                         {
                             //Log.d("TAG_JSON", "onClick: SEND URL " + result);
-                            ConditionResult( result );
+                            onSucces(result);
                         }
                     }
                 });
+
+    }
+
+    @Override
+    public void onSucces(Object obj)
+    {
+        //ConditionResult(obj.toString());
+
+    }
+
+    @Override
+    public void onFailed(Object obj)
+    {
 
     }
 

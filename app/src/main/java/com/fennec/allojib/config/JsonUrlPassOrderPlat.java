@@ -3,13 +3,16 @@ package com.fennec.allojib.config;
 import android.content.Context;
 import android.util.Log;
 
+import com.fennec.allojib.controller.Order_Plat_Activity;
+import com.fennec.allojib.controller.Restaurant_Activity;
+import com.fennec.allojib.myInterface.IonHandler;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 
 
-public class JsonUrlPassOrderPlat {
+public class JsonUrlPassOrderPlat implements IonHandler {
 
     public boolean result_succes = false;
     public boolean result_error = false;
@@ -30,14 +33,25 @@ public class JsonUrlPassOrderPlat {
                     {
                         if(result != null)
                         {
-                            Log.d("TAG_JSON_ORDER", "RESULT: SEND URL " + result);
-                            ConditionResult( result );
-                        }else
-                            {
-                                Log.d("TAG_JSON_ORDER", "Error: Result ");
-                            }
+                            Log.d("TAG_JSON_ORDER", "RESULT: SEND URL -----------------> " + result);
+                            onSucces(result);
+                        }else {
+                            Log.d("TAG_JSON_ORDER", "Error: Result ");
+                        }
                     }
                 });
+    }
+
+    @Override
+    public void onSucces(Object obj)
+    {
+        ConditionResult( obj.toString() );
+        Order_Plat_Activity.onSucces();
+    }
+
+    @Override
+    public void onFailed(Object obj)
+    {
 
     }
 

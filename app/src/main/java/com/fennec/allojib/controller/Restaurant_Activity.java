@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.fennec.allojib.R;
@@ -34,6 +37,9 @@ public class Restaurant_Activity extends AppCompatActivity {
 
     public ProgressBar progressBar3;
 
+    public ImageButton btn_search;
+    public EditText editText_restaurant;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,6 +56,19 @@ public class Restaurant_Activity extends AppCompatActivity {
         JsonUrlPlat jsonUrlPlat = new JsonUrlPlat(url_informations+"tbl_plat", main);
         JsonUrlRestaurant jsonRestaurant = new JsonUrlRestaurant(url_informations+"tbl_retaurant", main);
         JsonUrlCategoryPlat jsonUrlCategoryPlat = new JsonUrlCategoryPlat(url_informations+"tbl_category_plat", main);
+
+        editText_restaurant = (EditText) findViewById(R.id.editText_restaurant);
+        btn_search = (ImageButton) findViewById(R.id.btn_search);
+
+
+        btn_search.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                update_adapter_search(editText_restaurant.getText().toString());
+            }
+        });
 
     }
 
@@ -86,6 +105,12 @@ public class Restaurant_Activity extends AppCompatActivity {
             recyclerView2.setAdapter(restaurantAdapter);
         }
 
+    }
+
+    public static void update_adapter_search(String name)
+    {
+        restaurantAdapter = new RestaurantAdapter(RestaurantRepository.RestaurantByName(name));
+        recyclerView2.setAdapter(restaurantAdapter);
     }
 
     public static void to_newIntent(int id_rest)

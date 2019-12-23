@@ -8,11 +8,17 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fennec.allojib.R;
@@ -22,6 +28,7 @@ import com.fennec.allojib.config.JsonUrlPlat;
 import com.fennec.allojib.config.JsonUrlRestaurant;
 import com.fennec.allojib.config.constant;
 import com.fennec.allojib.repository.ClientRepository;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public ProgressBar progressBar2;
     public int progress = 0;
 
-    EditText editText_email;
-    EditText editText_pass;
+    TextInputLayout editText_email;
+    TextInputLayout editText_pass;
 
     public Handler handler = new Handler();
 
@@ -56,29 +63,44 @@ public class MainActivity extends AppCompatActivity {
             else{
                 setContentView(R.layout.login_form);
 
-                editText_email = (EditText) findViewById(R.id.editText_email);
-                editText_pass = (EditText) findViewById(R.id.editText_pass);
-
-                progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
-                progressBar2.setMax(100);
-                progress = progressBar2.getProgress();
+                editText_email = (TextInputLayout) findViewById(R.id.editText_email);
+                editText_pass = (TextInputLayout) findViewById(R.id.editText_pass);
 
                 Button Button_valider = (Button) findViewById(R.id.Button_valider);
+
+                Button Button_registre = (Button) findViewById(R.id.Button_registre);
+
                 Button_valider.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
-                        //Toast.makeText(main,"connexion to the App", Toast.LENGTH_SHORT).show();
+                        if(verifyIfBlank(editText_email) && verifyIfBlank(editText_pass))
+                        {
+                            String url_informations = "/json/getClient.php?";
 
-                        String url_informations = "/json/getClient.php?";
+                            String email = "email="+editText_email.getEditText().getText().toString();
+                            String pass = "&pass="+editText_pass.getEditText().getText().toString();
 
-                        String email = "email="+(editText_email.getText()).toString();
-                        String pass = "&pass="+(editText_pass.getText()).toString();
+                            url_informations = constant.url_host+url_informations+email+pass;
 
-                        url_informations = constant.url_host+url_informations+email+pass;
+                            Toast.makeText(main,""+editText_email.getEditText().getText().toString(), Toast.LENGTH_SHORT).show();
 
-                        jsonClient = new JsonUrlClient(url_informations, main);
+                            jsonClient = new JsonUrlClient(url_informations, main);
+                        }else
+                            {
+                                OnFailedLogin();
+                            }
+                    }
+                });
+
+                Button_registre.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Intent intent = new Intent(main, Register_form.class);
+                        main.startActivity(intent);
                     }
                 });
 
@@ -88,9 +110,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static boolean verifyIfBlank(TextInputLayout input)
+    {
+        if (TextUtils.isEmpty(input.getEditText().getText().toString()))
+        {
+            input.setError("Champs vide");
+            return false;
+        }else {
+            input.setErrorEnabled(false);
+            return true;
+        }
+    }
+
     public static void OnSuccesLogin()
     {
-        Toast.makeText(main,"Connexion faite avec succés", Toast.LENGTH_SHORT).show();
+        Costum_toast("Connexion faite avec succés !! ");
 
         Intent intent = new Intent(main, Menu_Activity.class);
         main.startActivity(intent);
@@ -109,11 +143,13 @@ public class MainActivity extends AppCompatActivity {
 
         edit.commit();
         main.finish();
+
+
     }
 
     public static void OnFailedLogin()
     {
-        Toast.makeText(main,"Email ou mot de pass incorrect ", Toast.LENGTH_SHORT).show();
+        Costum_toast(" Email ou mot de pass incorrect !");
     }
 
     public boolean isSharedPreferences()
@@ -128,6 +164,15 @@ public class MainActivity extends AppCompatActivity {
         String ville = prefs.getString("ville", "vide");
         int sexe = prefs.getInt("sexe", 0);
 
+        ClientRepository.main_Client.id = id;
+        ClientRepository.main_Client.email = email;
+        ClientRepository.main_Client.nom = nom;
+        ClientRepository.main_Client.prenom = prenom;
+        ClientRepository.main_Client.tel = tel;
+        ClientRepository.main_Client.adresse = adresse;
+        ClientRepository.main_Client.ville = ville;
+        ClientRepository.main_Client.sexe = sexe;
+
         if(id == 0 && email.equals("vide"))
         {
             return false;
@@ -140,6 +185,23 @@ public class MainActivity extends AppCompatActivity {
     {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+    public static void Costum_toast(String msg)
+    {
+        /** Costume toast to test**/
+        LayoutInflater inflater = main.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.activity_costum_toast,
+                (ViewGroup) main.findViewById(R.id.toast_layout_root));
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(msg);
+
+        Toast toast = new Toast(main.getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+        /** end teaosot **/
     }
 
 }

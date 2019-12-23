@@ -9,14 +9,18 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -37,6 +41,7 @@ import com.fennec.allojib.repository.OrderPlatRepository;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
 import com.fennec.allojib.repository.RestaurantRepository;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
 
@@ -63,6 +68,8 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
     public int lastPosition;
 
+    public boolean form_right=true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -75,8 +82,9 @@ public class Order_Plat_Activity extends AppCompatActivity {
         LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(lm);
 
-        orderPlatAdapter = new OrderPlatAdapter(OrderPlatRepository.list_orderPlat);
+        orderPlatAdapter = new OrderPlatAdapter(OrderPlatRepository.WithoutIdorder());
         recyclerView.setAdapter(orderPlatAdapter);
+        /** adapter for test we have to improve our self for this end  **/
 
         btn_radio_l1 = (RadioButton) findViewById(R.id.btn_radio_l1);
         btn_radio_l2 = (RadioButton) findViewById(R.id.btn_radio_l2);
@@ -241,146 +249,168 @@ public class Order_Plat_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                PassOrderPlat current_order = new PassOrderPlat();
+                form_right = true;
 
-                current_order.total = OrderPlatRepository.getTotalOrder();
+                //form_right = ((!(btn_radio_l1.isChecked() || btn_radio_l2.isChecked())) ? false : true);
 
-                if(btn_radio_l1.isChecked())
+                if(!(btn_radio_l1.isChecked() || btn_radio_l2.isChecked()))
                 {
-                    current_order.mode_livraison = 1;
-                    current_order.date_order = "vide";
-                    current_order.time_order = "vide";
-                }else {
-                    current_order.mode_livraison = 2;
-                    current_order.date_order = txtDate.getText().toString();
-                    current_order.time_order = txtTime.getText().toString();
+                    form_right = false;
                 }
 
-                if(btn_radio_moi.isChecked())
+                if(btn_radio_l2.isChecked())
                 {
-                    current_order.collecteur = 1;
-                    current_order.nom_collecteur = "vide";
-                    current_order.num_collecteur = "vide";
-                }else {
-                    current_order.collecteur = 2;
-                    current_order.nom_collecteur = personne_conserner.getText().toString();
-                    current_order.num_collecteur = tel_personne.getText().toString();
-                }
-
-                current_order.adresse = adresse_maps.getText().toString();
-                current_order.note = note_client.getText().toString();
-
-                current_order.id_client = ClientRepository.main_Client.id;
-                current_order.situation = 1;
-
-
-                lastPosition = PassOrderPlatRepository.list_passOrderPlat.size();
-                PassOrderPlatRepository.list_passOrderPlat.add(current_order);
-
-                /*** set order in server **/
-
-                //localhost/livraison/json/setPassOrderPlat.php?total=120&mode_livraison=1&date_order=vide&time_order=vide&collecteur=2
-                //&nom_collecteur=med&num_collecteur=0611336628&adresse=hayoujda&note=rien&id_client=1&situation=1
-
-
-                String url_informations = constant.url_host+"json/setPassOrderPlat.php?";
-
-                String total = "total="+current_order.total;
-                String mode_livraison = "&mode_livraison="+current_order.mode_livraison;
-                String date_order = "&date_order="+current_order.date_order;
-                String time_order = "&time_order="+current_order.time_order;
-                String collecteur = "&collecteur="+current_order.collecteur;
-                String nom_collecteur = "&nom_collecteur="+current_order.nom_collecteur;
-                String num_collecteur = "&num_collecteur="+current_order.num_collecteur;
-                String adresse = "&adresse="+current_order.adresse;
-                String note = "&note="+current_order.note ;
-                String id_client = "&id_client="+current_order.id_client;
-                String situation = "&situation="+current_order.situation;
-
-                url_informations = url_informations+total+mode_livraison+date_order+time_order+collecteur+nom_collecteur+num_collecteur+adresse+note+id_client+situation;
-
-                //Log.d("TAG_JSON_ORDER", "TO SEND "+ url_informations);
-
-                JsonUrlPassOrderPlat jsonUrlPassOrderPlat = new JsonUrlPassOrderPlat(url_informations, main, lastPosition);
-
-                Toast.makeText(main,"total : "+current_order.total, Toast.LENGTH_SHORT ).show();
-
-                /** SET THE THREAD FOR SEND DAETAIL ORDER PLAT TO SERVER */
-                //.....
-                new Thread(new Runnable()
-                {
-                    public void run()
+                    if(txtDate.getText().toString().trim().length() == 0 || txtTime.getText().toString().trim().length() == 0)
                     {
-                        while (progress < 100)
-                        {
-                            progress += 1;
-                            handler.post(new Runnable()
-                            {
-                                public void run()
-                                {
-                                    // set progress
-                                    progressBar4.setProgress(progress);
-                                }
-                            });
-
-                            try
-                            {
-                                Thread.sleep(50);
-                            } catch (InterruptedException e)
-                            {
-                                e.printStackTrace();
-                            }
-                        }
-                        // Progress finished, re-enter UI thread and set text
-                        handler.post(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                // handler after sleep
-                                progressBar4.setProgress(100);
-
-                                /*** set detaille order in server **/
-
-                                //localhost/livraison/json/setOrderPlat.php?id_passOrder=1&id_plat=1&quantity=5
-
-                                //OrderPlat current_order = new OrderPlat();
-                                //current_order.id_plat =
-
-                                for (int i = 0; i < OrderPlatRepository.list_orderPlat.size(); i++)
-                                {
-                                    OrderPlatRepository.list_orderPlat.get(i).id_passOrder = PassOrderPlatRepository.list_passOrderPlat.get(lastPosition).id;
-
-                                    String url_informations = constant.url_host+"json/setOrderPlat.php?";
-
-                                    String id_passOrder = "id_passOrder="+OrderPlatRepository.list_orderPlat.get(i).id_passOrder;
-                                    String id_plat = "&id_plat="+OrderPlatRepository.list_orderPlat.get(i).id_plat;
-                                    String quantity = "&quantity="+OrderPlatRepository.list_orderPlat.get(i).quantity;
-
-
-                                    url_informations = url_informations+id_passOrder+id_plat+quantity;
-
-                                    Log.d("TAG_JSON_ORDER_DETAIL", "TO SEND "+ url_informations);
-
-                                    JsonUrlOrderPlat jsonUrlOrderPlat = new JsonUrlOrderPlat(url_informations, main);
-
-                                }
-
-                                /** oppen new intent to detaills of command **/
-
-                                Intent intent = new Intent(main, Commande_Activity.class);
-                                startActivity(intent);
-
-                                main.finish();
-
-                            }
-                        });
+                        form_right = false;
                     }
-                }).start();
+                }
+
+                if(!(btn_radio_moi.isChecked() || btn_radio_autre.isChecked()))
+                {
+                    form_right = false;
+                }
+
+                if(btn_radio_autre.isChecked())
+                {
+                    if(personne_conserner.getText().toString().trim().length() == 0 || tel_personne.getText().toString().trim().length() == 0)
+                    {
+                        form_right = false;
+                    }
+                }
+
+                if(adresse_maps.getText().toString().trim().length() == 0)
+                {
+                    form_right = false;
+                }
+
+                if(note_client.getText().toString().trim().length() == 0)
+                {
+                    form_right = false;
+                }
+
+                if(OrderPlatRepository.list_orderPlat.size() == 0)
+                {
+                    Costum_toast("Votre panier et vide , Veuillez choisir un plat");
+                }else
+                    {
+                        if(form_right){
+                            traitement_function();
+                        } else
+                            {
+                                Costum_toast("Veuillez Remplir tout les champs");
+                            }
+                    }
+
+
 
             }
         });
 
+    }
+
+    public static void traitement_function()
+    {
+        PassOrderPlat current_order = new PassOrderPlat();
+
+        current_order.total = OrderPlatRepository.getTotalOrder();
+
+        if(main.btn_radio_l1.isChecked())
+        {
+            current_order.mode_livraison = 1;
+            current_order.date_order = "vide";
+            current_order.time_order = "vide";
+        }else {
+            current_order.mode_livraison = 2;
+            current_order.date_order = main.txtDate.getText().toString();
+            current_order.time_order = main.txtTime.getText().toString();
+        }
+
+        if(main.btn_radio_moi.isChecked())
+        {
+            current_order.collecteur = 1;
+            current_order.nom_collecteur = "vide";
+            current_order.num_collecteur = "vide";
+        }else {
+            current_order.collecteur = 2;
+            current_order.nom_collecteur = main.personne_conserner.getText().toString();
+            current_order.num_collecteur = main.tel_personne.getText().toString();
+        }
+
+        current_order.adresse = main.adresse_maps.getText().toString();
+        current_order.note = main.note_client.getText().toString();
+
+        current_order.id_client = ClientRepository.main_Client.id;
+        current_order.situation = 1;
+
+
+        main.lastPosition = PassOrderPlatRepository.list_passOrderPlat.size();
+        PassOrderPlatRepository.list_passOrderPlat.add(current_order);
+
+        /*** set order in server **/
+
+        //localhost/livraison/json/setPassOrderPlat.php?total=120&mode_livraison=1&date_order=vide&time_order=vide&collecteur=2
+        //&nom_collecteur=med&num_collecteur=0611336628&adresse=hayoujda&note=rien&id_client=1&situation=1
+
+
+        String url_informations = constant.url_host+"json/setPassOrderPlat.php?";
+
+        String total = "total="+current_order.total;
+        String mode_livraison = "&mode_livraison="+current_order.mode_livraison;
+        String date_order = "&date_order="+current_order.date_order;
+        String time_order = "&time_order="+current_order.time_order;
+        String collecteur = "&collecteur="+current_order.collecteur;
+        String nom_collecteur = "&nom_collecteur="+current_order.nom_collecteur;
+        String num_collecteur = "&num_collecteur="+current_order.num_collecteur;
+        String adresse = "&adresse="+current_order.adresse;
+        String note = "&note="+current_order.note ;
+        String id_client = "&id_client="+current_order.id_client;
+        String situation = "&situation="+current_order.situation;
+
+        url_informations = url_informations+total+mode_livraison+date_order+time_order+collecteur+nom_collecteur+num_collecteur+adresse+note+id_client+situation;
+
+        //Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ url_informations);
+
+        JsonUrlPassOrderPlat jsonUrlPassOrderPlat = new JsonUrlPassOrderPlat(url_informations, main, main.lastPosition);
+
+        Toast.makeText(main,"total : "+current_order.total, Toast.LENGTH_SHORT ).show();
+
+    }
+
+    public static void onSucces()
+    {
+        /** SET THE THREAD FOR SEND DAETAIL ORDER PLAT TO SERVER */
+        /** Set detaille order in server **/
+
+        //localhost/livraison/json/setOrderPlat.php?id_passOrder=1&id_plat=1&quantity=5
+
+        for (int i = 0; i < OrderPlatRepository.list_orderPlat.size(); i++)
+        {
+            OrderPlatRepository.list_orderPlat.get(i).id_passOrder = PassOrderPlatRepository.list_passOrderPlat.get(main.lastPosition).id;
+
+            String url_informations = constant.url_host+"json/setOrderPlat.php?";
+
+            String id_passOrder = "id_passOrder="+OrderPlatRepository.list_orderPlat.get(i).id_passOrder;
+            String id_plat = "&id_plat="+OrderPlatRepository.list_orderPlat.get(i).id_plat;
+            String quantity = "&quantity="+OrderPlatRepository.list_orderPlat.get(i).quantity;
+
+
+            url_informations = url_informations+id_passOrder+id_plat+quantity;
+
+            Log.d("TAG_JSON_ORDER_DETAIL", "TO SEND "+ url_informations);
+
+            JsonUrlOrderPlat jsonUrlOrderPlat = new JsonUrlOrderPlat(url_informations, main);
+        }
+
+        /** wee dont show this commande again */
+
+        //OrderPlatRepository.list_orderPlat.clear();
+
+        /** open new intent to details of command **/
+
+        Intent intent = new Intent(main, Commande_Activity.class);
+        main.startActivity(intent);
+        main.finish();
     }
 
     public static void getNewAdpter()
@@ -389,5 +419,22 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
         orderPlatAdapter = new OrderPlatAdapter(OrderPlatRepository.list_orderPlat);
         recyclerView.setAdapter(orderPlatAdapter);
+    }
+
+    public static void Costum_toast(String msg)
+    {
+        /** Costume toast to test**/
+        LayoutInflater inflater = main.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.activity_costum_toast,
+                (ViewGroup) main.findViewById(R.id.toast_layout_root));
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(msg);
+
+        Toast toast = new Toast(main.getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+        /** end teaosot **/
     }
 }

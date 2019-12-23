@@ -1,6 +1,7 @@
 package com.fennec.allojib.adapter;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,13 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_plat, parent, false);
+        View itemView;
+        if(viewType == 1)
+        {
+             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_plat3, parent, false);
+        }else{
+             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_plat, parent, false);
+        }
 
         return new MyViewHolder(itemView);
     }
@@ -54,9 +61,12 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
     @Override
     public int getItemViewType(int position)
     {
-        if(position == getItemCount()-1 && showAdd)
+        /*if(position == getItemCount()-1 && showAdd)
             return 2;
-        return 1;
+        return 1;*/
+
+        if (position == 0) return 1;
+        else return 2;
     }
 
     @Override
@@ -64,12 +74,6 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
     {
         final CategoryPlat myCategoryPlat = list.get(position);
         holder.intituler.setText(myCategoryPlat.intituler);
-
-        if(myCategoryPlat.id == 0)
-        {
-            holder.intituler.setBackgroundColor(Color.argb(255,200,2,34));
-            holder.intituler.setTextColor(Color.argb(255,255,255,255));
-        }
 
         holder.parent.setOnClickListener(new View.OnClickListener()
         {

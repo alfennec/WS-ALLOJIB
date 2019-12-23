@@ -47,14 +47,28 @@ public class PlatViewHolder extends ChildViewHolder
             @Override
             public void onClick(View v)
             {
-                OrderPlat Current_order = new OrderPlat(plat.id,1);
+                Boolean isFound = false;
 
-                OrderPlatRepository.list_orderPlat.add(Current_order);
+                for (int i = 0; i < OrderPlatRepository.list_orderPlat.size(); i++)
+                {
+                    if(OrderPlatRepository.list_orderPlat.get(i).id_plat == plat.id && OrderPlatRepository.list_orderPlat.get(i).id_passOrder == 0)
+                    {
+                        OrderPlatRepository.list_orderPlat.get(i).quantity++;
+                        isFound = true;
+                        CategoryPlat_Activity.OnclickAdd(plat.intituler+" Ajouté au Panier ");
+                    }
+                }
 
-                CategoryPlat_Activity.OnclickAdd(plat.intituler+" Ajouté au Panier");
+                if(!isFound)
+                {
+                    OrderPlat Current_order = new OrderPlat(plat.id,1);
 
-                Log.d("TAG_JSON", "onClick: " + OrderPlatRepository.list_orderPlat.size()+" "+plat.intituler);
+                    OrderPlatRepository.list_orderPlat.add(Current_order);
 
+                    CategoryPlat_Activity.OnclickAdd(plat.intituler+" Ajouté au Panier");
+
+                    Log.d("TAG_JSON", "onClick: " + OrderPlatRepository.list_orderPlat.size()+" "+plat.intituler);
+                }
             }
         });
 

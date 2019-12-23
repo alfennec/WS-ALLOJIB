@@ -16,22 +16,25 @@ import org.json.JSONObject;
 
 public class JsonUrlClient implements IonHandler {
 
-    public boolean result_succes = false;
-    public boolean result_error = false;
-
     @Override
     public void onSucces(Object obj)
     {
-        ConditionResult(obj.toString());
+        String result = obj.toString().replaceAll("\\s","");
 
-        Log.d("TAG_JSON", "onClick: SEND URL " + obj.toString());
-
-        if(!result_error)
+        //Log.d("TAG_JSON_LOGIN", "onClick: SEND"+result+"rt");
+        try
         {
-            MainActivity.OnSuccesLogin();
-        }else {
+            if(Integer.parseInt(result) == 406 )
+            {
                 MainActivity.OnFailedLogin();
+            }
+        }catch (Exception e)
+        {
+            getJsonClient(obj.toString());
+            MainActivity.OnSuccesLogin();
         }
+
+
 
     }
 
@@ -53,34 +56,14 @@ public class JsonUrlClient implements IonHandler {
                     {
                         if(result != null)
                         {
-                            //Log.d("TAG_JSON", "onClick: SEND URL " + result);
-                            onSucces( result );
-
+                            //Log.d("TAG_JSON", "onClick: SEND URL" + result +"LPR");
+                            onSucces(result);
                         }else
                             {
                                 onFailed(-1);
                             }
                     }
                 });
-
-    }
-
-
-
-    public void ConditionResult(String result)
-    {
-        if(result.equals("succes"))
-        {
-            result_succes = true;
-        }
-        else if(result.equals("error"))
-        {
-            result_error = true;
-        }
-        else {
-            result_succes = true;
-            getJsonClient(result);
-        }
     }
 
     public void getJsonClient(String result)
