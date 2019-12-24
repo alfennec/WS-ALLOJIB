@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         {
             if(isSharedPreferences())
             {
-                Intent intent = new Intent(main, Menu_Activity.class);
+                Intent intent = new Intent(main, Home_Activity.class);
                 startActivity(intent);
 
                 main.finish();
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     {
         Costum_toast("Connexion faite avec succés !! ");
 
-        Intent intent = new Intent(main, Menu_Activity.class);
+        Intent intent = new Intent(main, Home_Activity.class);
         main.startActivity(intent);
 
         SharedPreferences prefs = main.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
         edit.commit();
         main.finish();
-
 
     }
 
