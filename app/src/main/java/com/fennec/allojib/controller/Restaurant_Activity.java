@@ -48,15 +48,6 @@ public class Restaurant_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant);
         main = this;
 
-        RestaurantRepository.list_restaurant.clear();
-        PlatRepository.list_plat.clear();
-        CategoryPlatRepository.list_categoryPlat.clear();
-
-        String url_informations = constant.url_host+"/json/getTable.php?table=";
-        JsonUrlPlat jsonUrlPlat = new JsonUrlPlat(url_informations+"tbl_plat", main);
-        JsonUrlRestaurant jsonRestaurant = new JsonUrlRestaurant(url_informations+"tbl_retaurant", main);
-        JsonUrlCategoryPlat jsonUrlCategoryPlat = new JsonUrlCategoryPlat(url_informations+"tbl_category_plat", main);
-
         editText_restaurant = (EditText) findViewById(R.id.editText_restaurant);
         btn_search = (ImageButton) findViewById(R.id.btn_search);
 
@@ -70,6 +61,8 @@ public class Restaurant_Activity extends AppCompatActivity {
             }
         });
 
+        onLoadCategory();
+        onLoadRestaurant();
     }
 
     public static void onLoadCategory()

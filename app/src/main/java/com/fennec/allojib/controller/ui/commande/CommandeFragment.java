@@ -1,5 +1,6 @@
 package com.fennec.allojib.controller.ui.commande;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fennec.allojib.R;
 import com.fennec.allojib.adapter.CommandePlatAdapter;
 import com.fennec.allojib.adapter.PassOrderPlatAdapter;
+import com.fennec.allojib.controller.Commande_Activity;
 import com.fennec.allojib.repository.OrderPlatRepository;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
 
 public class CommandeFragment extends Fragment {
 
     private CommandeViewModel commandeViewModel;
+
+    public static CommandeFragment main;
 
 
     public static RecyclerView recyclerView;
@@ -32,6 +36,8 @@ public class CommandeFragment extends Fragment {
     {
         commandeViewModel = ViewModelProviders.of(this).get(CommandeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_commande, container, false);
+
+        main = this;
 
         //final TextView textView = root.findViewById(R.id.text_commande);
 
@@ -53,5 +59,12 @@ public class CommandeFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    public static void to_OtherActtivity(int id_order)
+    {
+        Intent intent = new Intent(main.getContext(), Commande_Activity.class);
+        intent.putExtra("id_order", id_order);
+        main.startActivity(intent);
     }
 }

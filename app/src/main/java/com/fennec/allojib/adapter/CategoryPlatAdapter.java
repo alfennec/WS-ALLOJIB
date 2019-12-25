@@ -80,7 +80,7 @@ public class CategoryPlatAdapter extends RecyclerView.Adapter<CategoryPlatAdapte
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(Menu_Activity.main,""+myCategoryPlat.intituler, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Restaurant_Activity.main,""+myCategoryPlat.intituler, Toast.LENGTH_SHORT).show();
                 Restaurant_Activity.update_adapter2(myCategoryPlat.id);
             }
         });

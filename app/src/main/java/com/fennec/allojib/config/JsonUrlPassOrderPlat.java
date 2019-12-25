@@ -33,7 +33,6 @@ public class JsonUrlPassOrderPlat implements IonHandler {
                     {
                         if(result != null)
                         {
-                            Log.d("TAG_JSON_ORDER", "RESULT: SEND URL -----------------> " + result);
                             onSucces(result);
                         }else {
                             Log.d("TAG_JSON_ORDER", "Error: Result ");

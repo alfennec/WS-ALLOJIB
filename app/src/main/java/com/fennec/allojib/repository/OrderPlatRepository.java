@@ -18,9 +18,12 @@ public class OrderPlatRepository {
 
         for (int i = 0; i < list_orderPlat.size(); i++)
         {
-            current_plat = PlatRepository.getPlatById(list_orderPlat.get(i).id_plat);
+            if(list_orderPlat.get(i).id_passOrder == 0)
+            {
+                current_plat = PlatRepository.getPlatById(list_orderPlat.get(i).id_plat);
 
-            Total_Order += (current_plat.prix*list_orderPlat.get(i).quantity);
+                Total_Order += (current_plat.prix*list_orderPlat.get(i).quantity);
+            }
         }
 
         return Total_Order;

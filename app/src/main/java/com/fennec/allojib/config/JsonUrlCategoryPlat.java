@@ -27,7 +27,7 @@ public class JsonUrlCategoryPlat implements IonHandler {
     @Override
     public void onSucces(Object obj)
     {
-        Restaurant_Activity.onLoadCategory();
+        //Restaurant_Activity.onLoadCategory();
     }
 
     @Override

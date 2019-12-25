@@ -19,7 +19,7 @@ import com.fennec.allojib.repository.PassOrderPlatRepository;
 
 public class Commande_Activity extends AppCompatActivity {
 
-    public static int id_PassOrder;
+    public static PassOrderPlat CurrentPassOrder;
     public static Commande_Activity main;
 
     public TextView order_id,tv_total;
@@ -37,13 +37,21 @@ public class Commande_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_commande);
         main = this;
 
-        id_PassOrder = PassOrderPlatRepository.list_passOrderPlat.get(PassOrderPlatRepository.list_passOrderPlat.size()-1).id;
+        int id_order = getIntent().getIntExtra("id_order",0);
+
+        for (int i = 0; i < PassOrderPlatRepository.list_passOrderPlat.size(); i++)
+        {
+            if(PassOrderPlatRepository.list_passOrderPlat.get(i).id == id_order)
+            {
+                CurrentPassOrder = PassOrderPlatRepository.list_passOrderPlat.get(i);
+            }
+        }
 
         order_id = (TextView) findViewById(R.id.order_id);
         tv_total = (TextView) findViewById(R.id.tv_total);
 
-        order_id.setText("N°"+id_PassOrder);
-        tv_total.setText("Total :"+PassOrderPlatRepository.list_passOrderPlat.get(PassOrderPlatRepository.list_passOrderPlat.size()-1).total+"MAD");
+        order_id.setText("N°"+CurrentPassOrder.id);
+        tv_total.setText("Total :"+CurrentPassOrder.total+" MAD");
 
 
         /** adapter for test we have to improve our self for this app  **/
@@ -51,7 +59,7 @@ public class Commande_Activity extends AppCompatActivity {
         LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(lm);
 
-        commandePlatAdapter = new CommandePlatAdapter(OrderPlatRepository.WithIdorder(id_PassOrder));
+        commandePlatAdapter = new CommandePlatAdapter(OrderPlatRepository.WithIdorder(CurrentPassOrder.id));
         recyclerView.setAdapter(commandePlatAdapter);
         /** adapter for test we have to improve our self for this end  **/
 

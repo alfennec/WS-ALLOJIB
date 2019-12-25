@@ -7,4 +7,7 @@ public class constant {
 
     public static String adresse_livraison;
 
+    ////localhost/livraison/json/getOrderPlat.php?id_order=1
+    ////localhost/livraison/json/getPassOrderPlat.php?id_client=1
+
 }

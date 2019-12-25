@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fennec.allojib.R;
+import com.fennec.allojib.config.JsonGetPassOrderPlat;
 import com.fennec.allojib.config.JsonUrlCategoryPlat;
 import com.fennec.allojib.config.JsonUrlClient;
 import com.fennec.allojib.config.JsonUrlPlat;
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         }else {
             setContentView(R.layout.not_connected);
         }
+
     }
 
     public static boolean verifyIfBlank(TextInputLayout input)

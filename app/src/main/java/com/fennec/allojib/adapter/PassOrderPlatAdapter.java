@@ -1,5 +1,6 @@
 package com.fennec.allojib.adapter;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 import com.fennec.allojib.R;
+import com.fennec.allojib.controller.Commande_Activity;
+import com.fennec.allojib.controller.ui.commande.CommandeFragment;
 import com.fennec.allojib.entity.PassOrderPlat;
 
 
@@ -65,8 +68,22 @@ public class PassOrderPlatAdapter extends RecyclerView.Adapter<PassOrderPlatAdap
         final PassOrderPlat myPassOrder = list.get(position);
         holder.tv_commande.setText("Commande N°: "+myPassOrder.id);
         holder.tv_prix.setText(myPassOrder.total+" MAD");
-        holder.tv_statu.setText(myPassOrder.mode_livraison+" ");
-        holder.tv_time.setText(myPassOrder.date_order+" ");
+        holder.tv_time.setText(myPassOrder.date_order+" "+myPassOrder.time_order);
+
+        switch (myPassOrder.situation)
+        {
+            case 1 : holder.tv_statu.setText("On attente"); break;
+
+            case 2 : holder.tv_statu.setText("Confirmée"); break;
+
+            case 3 : holder.tv_statu.setText("Lancée"); break;
+
+            case 4 : holder.tv_statu.setText("Sérvi"); break;
+
+            case 5 : holder.tv_statu.setText("Annulée"); break;
+
+            default : holder.tv_statu.setText("Annulée"); break;
+        }
 
         holder.parent.setOnClickListener(new View.OnClickListener()
         {
@@ -74,6 +91,7 @@ public class PassOrderPlatAdapter extends RecyclerView.Adapter<PassOrderPlatAdap
             public void onClick(View view)
             {
                 //Restaurant_Activity.to_newIntent(myRestaurant.id);
+                CommandeFragment.to_OtherActtivity(myPassOrder.id);
             }
         });
 

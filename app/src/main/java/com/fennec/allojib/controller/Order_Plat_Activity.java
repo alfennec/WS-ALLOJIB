@@ -43,7 +43,10 @@ import com.fennec.allojib.repository.RestaurantRepository;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Order_Plat_Activity extends AppCompatActivity {
 
@@ -317,9 +320,15 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
         if(main.btn_radio_l1.isChecked())
         {
+            SimpleDateFormat mydate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            SimpleDateFormat mytime = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+            String currentDate = mydate.format(new Date());
+            String currentTime = mytime.format(new Date());
+
             current_order.mode_livraison = 1;
-            current_order.date_order = "vide";
-            current_order.time_order = "vide";
+            current_order.date_order = currentDate;
+            current_order.time_order = currentTime;
         }else {
             current_order.mode_livraison = 2;
             current_order.date_order = main.txtDate.getText().toString();
@@ -386,20 +395,23 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
         for (int i = 0; i < OrderPlatRepository.list_orderPlat.size(); i++)
         {
-            OrderPlatRepository.list_orderPlat.get(i).id_passOrder = PassOrderPlatRepository.list_passOrderPlat.get(main.lastPosition).id;
+            if(OrderPlatRepository.list_orderPlat.get(i).id_passOrder == 0)
+            {
+                OrderPlatRepository.list_orderPlat.get(i).id_passOrder = PassOrderPlatRepository.list_passOrderPlat.get(main.lastPosition).id;
 
-            String url_informations = constant.url_host+"json/setOrderPlat.php?";
+                String url_informations = constant.url_host+"json/setOrderPlat.php?";
 
-            String id_passOrder = "id_passOrder="+OrderPlatRepository.list_orderPlat.get(i).id_passOrder;
-            String id_plat = "&id_plat="+OrderPlatRepository.list_orderPlat.get(i).id_plat;
-            String quantity = "&quantity="+OrderPlatRepository.list_orderPlat.get(i).quantity;
+                String id_passOrder = "id_passOrder="+OrderPlatRepository.list_orderPlat.get(i).id_passOrder;
+                String id_plat = "&id_plat="+OrderPlatRepository.list_orderPlat.get(i).id_plat;
+                String quantity = "&quantity="+OrderPlatRepository.list_orderPlat.get(i).quantity;
 
 
-            url_informations = url_informations+id_passOrder+id_plat+quantity;
+                url_informations = url_informations+id_passOrder+id_plat+quantity;
 
-            Log.d("TAG_JSON_ORDER_DETAIL", "TO SEND "+ url_informations);
+                Log.d("TAG_JSON_ORDER_DETAIL", "TO SEND "+ url_informations);
 
-            JsonUrlOrderPlat jsonUrlOrderPlat = new JsonUrlOrderPlat(url_informations, main);
+                JsonUrlOrderPlat jsonUrlOrderPlat = new JsonUrlOrderPlat(url_informations, main);
+            }
         }
 
         /** wee dont show this commande again */
@@ -409,6 +421,7 @@ public class Order_Plat_Activity extends AppCompatActivity {
         /** open new intent to details of command **/
 
         Intent intent = new Intent(main, Commande_Activity.class);
+        intent.putExtra("id_order", PassOrderPlatRepository.list_passOrderPlat.get(main.lastPosition).id);
         main.startActivity(intent);
         main.finish();
     }

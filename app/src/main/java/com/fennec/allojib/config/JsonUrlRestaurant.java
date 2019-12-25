@@ -26,7 +26,7 @@ public class JsonUrlRestaurant implements IonHandler {
     @Override
     public void onSucces(Object obj)
     {
-        Restaurant_Activity.onLoadRestaurant();
+        //Restaurant_Activity.onLoadRestaurant();
     }
 
     @Override

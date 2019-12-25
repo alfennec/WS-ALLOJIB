@@ -8,6 +8,18 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.fennec.allojib.R;
+import com.fennec.allojib.config.JsonGetOrderPlat;
+import com.fennec.allojib.config.JsonGetPassOrderPlat;
+import com.fennec.allojib.config.JsonUrlCategoryPlat;
+import com.fennec.allojib.config.JsonUrlPassOrderPlat;
+import com.fennec.allojib.config.JsonUrlPlat;
+import com.fennec.allojib.config.JsonUrlRestaurant;
+import com.fennec.allojib.config.constant;
+import com.fennec.allojib.repository.CategoryPlatRepository;
+import com.fennec.allojib.repository.ClientRepository;
+import com.fennec.allojib.repository.PassOrderPlatRepository;
+import com.fennec.allojib.repository.PlatRepository;
+import com.fennec.allojib.repository.RestaurantRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,10 +44,15 @@ public class Home_Activity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+    public static Home_Activity main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        main = this;
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,6 +68,47 @@ public class Home_Activity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        /** get ALL DATA YOU NEED HERE **************************************************************/
+
+        /** clear data first **/
+        RestaurantRepository.list_restaurant.clear();
+        PlatRepository.list_plat.clear();
+        CategoryPlatRepository.list_categoryPlat.clear();
+
+        /** get PASS ORDER **/
+        //localhost/livraison/json/getPassOrderPlat.php?id_client=1
+        String url_informations = constant.url_host+"json/getPassOrderPlat.php?";
+        String id_client = "id_client="+ ClientRepository.main_Client.id;
+        url_informations = url_informations+id_client;
+        JsonGetPassOrderPlat jsonGetPassOrderPlat = new JsonGetPassOrderPlat(url_informations, main);
+
+        /** get RESTAURANT & CATEGORIE PLAT **/
+        url_informations = constant.url_host+"/json/getTable.php?table=";
+        JsonUrlPlat jsonUrlPlat = new JsonUrlPlat(url_informations+"tbl_plat", main);
+        JsonUrlRestaurant jsonRestaurant = new JsonUrlRestaurant(url_informations+"tbl_retaurant", main);
+        JsonUrlCategoryPlat jsonUrlCategoryPlat = new JsonUrlCategoryPlat(url_informations+"tbl_category_plat", main);
+    }
+
+    public static void OnJsonSucces()
+    {
+        //localhost/livraison/json/getOrderPlat.php?id_order=17
+
+
+
+        for (int i = 0; i < PassOrderPlatRepository.list_passOrderPlat.size(); i++)
+        {
+            String url_informations = constant.url_host+"json/getOrderPlat.php?";
+
+            String id_order = "id_order="+ PassOrderPlatRepository.list_passOrderPlat.get(i).id;
+
+            url_informations = url_informations+id_order;
+
+            Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ url_informations);
+            Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ id_order);
+
+            JsonGetOrderPlat jsonGetOrderPlat = new JsonGetOrderPlat(url_informations, main);
+        }
     }
 
     @Override
