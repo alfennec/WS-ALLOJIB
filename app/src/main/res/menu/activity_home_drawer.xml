@@ -10,6 +10,11 @@
             android:title="Accueil" />
 
         <item
+            android:id="@+id/nav_panier"
+            android:icon="@drawable/ic_add_shopping_cart_black_24dp"
+            android:title="Mon panier" />
+
+        <item
             android:id="@+id/nav_commande"
             android:icon="@drawable/ic_format_list_bulleted_black_24dp"
             android:title="Mes commandes" />

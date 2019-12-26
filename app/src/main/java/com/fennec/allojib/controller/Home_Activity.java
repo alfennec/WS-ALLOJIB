@@ -2,6 +2,7 @@ package com.fennec.allojib.controller;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import com.fennec.allojib.config.JsonUrlRestaurant;
 import com.fennec.allojib.config.constant;
 import com.fennec.allojib.repository.CategoryPlatRepository;
 import com.fennec.allojib.repository.ClientRepository;
+import com.fennec.allojib.repository.OrderPlatRepository;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
 import com.fennec.allojib.repository.PlatRepository;
 import com.fennec.allojib.repository.RestaurantRepository;
@@ -24,9 +26,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -39,6 +46,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Toast;
 
 public class Home_Activity extends AppCompatActivity {
 
@@ -61,7 +69,7 @@ public class Home_Activity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_commande, R.id.nav_profil,
+                R.id.nav_home, R.id.nav_panier, R.id.nav_commande, R.id.nav_profil,
                 R.id.nav_quitter)
                 .setDrawerLayout(drawer)
                 .build();
@@ -69,12 +77,31 @@ public class Home_Activity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments)
+            {
+                if(destination.getId() == R.id.nav_quitter)
+                {
+                    //main.finish();
+                    //Toast.makeText(Home_Activity.this, "hhhhhhhhhh", Toast.LENGTH_LONG).show();
+                    //Log.d("TAG_CLICK", "onDestinationChanged: ");
+
+                    Home_Activity.this.finish();
+                }
+            }
+        });
+
+
         /** get ALL DATA YOU NEED HERE **************************************************************/
 
         /** clear data first **/
         RestaurantRepository.list_restaurant.clear();
         PlatRepository.list_plat.clear();
         CategoryPlatRepository.list_categoryPlat.clear();
+        OrderPlatRepository.list_orderPlat.clear();
+        PassOrderPlatRepository.list_passOrderPlat.clear();
 
         /** get PASS ORDER **/
         //localhost/livraison/json/getPassOrderPlat.php?id_client=1
@@ -115,7 +142,7 @@ public class Home_Activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_, menu);
+       getMenuInflater().inflate(R.menu.home_, menu);
 
         return true;
     }
@@ -127,4 +154,6 @@ public class Home_Activity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }

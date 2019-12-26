@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.fennec.allojib.R;
+import com.fennec.allojib.controller.MapsActivity2;
 import com.fennec.allojib.controller.Restaurant_Activity;
 
 

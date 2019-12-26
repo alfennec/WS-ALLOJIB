@@ -16,10 +16,28 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_panier"
+        android:name="com.fennec.allojib.controller.ui.panier.PanierFragment"
+        android:label="Mon panier"
+        tools:layout="@layout/fragment_panier" >
+        <action
+            android:id="@+id/action_nav_gallery_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_commande"
         android:name="com.fennec.allojib.controller.ui.commande.CommandeFragment"
         android:label="Mes commandes"
         tools:layout="@layout/fragment_commande" >
+        <action
+            android:id="@+id/action_nav_gallery_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_quitter"
+        android:label="Quitter">
         <action
             android:id="@+id/action_nav_gallery_to_nav_slideshow"
             app:destination="@id/nav_slideshow" />

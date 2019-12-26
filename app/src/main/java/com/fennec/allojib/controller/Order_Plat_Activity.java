@@ -185,7 +185,7 @@ public class Order_Plat_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(main, MapsActivity.class);
+                Intent intent = new Intent(main, MapsActivity2.class);
                 startActivity(intent);
             }
         });
