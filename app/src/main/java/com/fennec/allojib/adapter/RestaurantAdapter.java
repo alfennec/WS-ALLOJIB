@@ -31,7 +31,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
         public TextView intituler,specialiter,situation,prix;
-        public ImageView image_restaurant,dote_situation;
+        public ImageView image_restaurant;
         public View parent;
         public RecyclerView recyclerView;
 
@@ -44,7 +44,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             situation = (TextView) view.findViewById(R.id.situation);
             prix = (TextView) view.findViewById(R.id.prix);
             image_restaurant = (ImageView) view.findViewById(R.id.image_restaurant);
-            dote_situation = (ImageView) view.findViewById(R.id.dote_situation);
 
         }
     }
@@ -81,12 +80,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
         if(myRestaurant.situation == 1)
         {
             holder.situation.setText("Ouvert");
-            holder.dote_situation.setColorFilter(Color.argb(255, 0, 255, 100));
 
         }else{
             holder.situation.setText("Fermer");
-            holder.dote_situation.setColorFilter(Color.argb(255, 255, 0, 0));
-
         }
 
         Glide.with(Restaurant_Activity.main).load(constant.url_host+"/upload/restaurant/"+myRestaurant.restaurant_image).into(holder.image_restaurant);

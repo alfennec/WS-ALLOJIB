@@ -23,7 +23,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.MapsActivity2"></activity>
+        <activity android:name=".controller.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".controller.MapsActivity2" />
         <activity
             android:name=".controller.Home_Activity"
             android:label="@string/title_activity_home_"
@@ -53,13 +60,7 @@
         <activity android:name=".controller.Register_form" />
         <activity android:name=".controller.Menu_Activity" />
         <activity android:name=".controller.Wait_Activity" />
-        <activity android:name=".controller.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".controller.MainActivity"></activity>
         <!--
 meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -59,7 +59,9 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
     public Button btnDatePicker, btnTimePicker;
     public EditText txtDate, txtTime;
-    public TextInputEditText personne_conserner, tel_personne, adresse_maps, note_client;
+    public  TextInputEditText personne_conserner, tel_personne, note_client;
+
+    public static TextInputEditText adresse_maps;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
 

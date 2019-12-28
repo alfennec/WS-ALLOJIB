@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,9 +94,20 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
     public static MapsActivity2 main;
 
+    public TextView tv_maps;
+    public Button btn_maps;
+
+    public double Latitude ;
+    public double Longitude ;
+
+    public TextView latTextView, lonTextView;
+
+    public static String myAdresse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle("Choisir votre Adresse");
 
         main = this;
 
@@ -123,6 +135,24 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         mapFragment.getMapAsync(this);
 
 
+        /** maps object event **/
+
+        btn_maps = (Button) findViewById(R.id.btn_maps);
+        tv_maps = (TextView) findViewById(R.id.tv_maps);
+
+        latTextView = findViewById(R.id.latTextView);
+        lonTextView = findViewById(R.id.lonTextView);
+
+        btn_maps.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Order_Plat_Activity.adresse_maps.setText(myAdresse);
+                MapsActivity2.this.finish();
+            }
+        });
+
         getLastLocation();
     }
 
@@ -143,11 +173,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                                 {
                                     requestNewLocationData();
                                 } else {
-                                    //latTextView.setText(location.getLatitude()+"");
-                                    //lonTextView.setText(location.getLongitude()+"");
 
-                                    //Latitude = location.getLatitude();
-                                    //Longitude = location.getLongitude();
 
                                     /**************** maps to adress ****/
 
@@ -155,7 +181,16 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                                     List<Address> addresses;
                                     geocoder = new Geocoder(main, Locale.getDefault());
 
-                                   /* try {
+                                    // Get the current location of the device and set the position of the map.
+                                    getDeviceLocation();
+
+                                    latTextView.setText(location.getLatitude()+"");
+                                    lonTextView.setText(location.getLongitude()+"");
+
+                                    Latitude = location.getLatitude();
+                                    Longitude = location.getLongitude();
+
+                                      try {
                                         addresses = geocoder.getFromLocation(Latitude, Longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                                         String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                                         String city = addresses.get(0).getLocality();
@@ -166,12 +201,11 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
                                         tv_maps.setText(address);
 
+                                          myAdresse = address;
+
                                     }catch (Exception e) {
 
-                                    }*/
-
-                                    // Get the current location of the device and set the position of the map.
-                                    getDeviceLocation();
+                                    }
                                 }
                             }
                         }
@@ -278,7 +312,8 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
      * This callback is triggered when the map is ready to be used.
      */
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(GoogleMap map)
+    {
         mMap = map;
 
         // Use a custom info window adapter to handle multiple lines of text in the
@@ -317,6 +352,46 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
 
         // Get the current location of the device and set the position of the map.
         //getDeviceLocation();
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng latLng)
+            {
+                mMap.clear();
+
+                Latitude = latLng.latitude;
+                Longitude = latLng.longitude;
+
+                LatLng mylocation = new LatLng(latLng.latitude, latLng.longitude);
+                mMap.addMarker(new MarkerOptions().position(mylocation).title("location"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(mylocation));
+
+                Geocoder geocoder;
+                List<Address> addresses;
+                geocoder = new Geocoder(main, Locale.getDefault());
+
+                try
+                {
+                    addresses = geocoder.getFromLocation(Latitude, Longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    String city = addresses.get(0).getLocality();
+                    String state = addresses.get(0).getAdminArea();
+                    String country = addresses.get(0).getCountryName();
+                    String postalCode = addresses.get(0).getPostalCode();
+                    String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+                    tv_maps.setText(address);
+                    myAdresse = address;
+
+                    Log.d("TAG_MAPS", "Pause marker in here "+address);
+
+                }catch (Exception e)
+                {
+
+                }
+            }
+        });
     }
 
     /**

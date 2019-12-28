@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/image_restaurant"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,16 +60,49 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/prix"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:gravity="right"
-                android:text="TextView"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:layout_weight="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="2">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="2"
+                        app:srcCompat="@drawable/ic_delivery_icon" />
+
+
+                    <TextView
+                        android:id="@+id/prix"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="TextView"
+                        android:textColor="#fff"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/specialiter"
@@ -80,16 +113,54 @@
                 android:text="TextView"
                 android:textColor="#fff"/>
 
-
-            <ImageView
-                android:id="@+id/dote_situation"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/ic_dote_situation"
-                android:tint="#008000"/>
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:tint="#FFFF00"
+                    app:srcCompat="@drawable/ic_star_black_24dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:tint="#FFFF00"
+                    app:srcCompat="@drawable/ic_star_black_24dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:tint="#FFFF00"
+                    app:srcCompat="@drawable/ic_star_black_24dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:tint="#FFFF00"
+                    app:srcCompat="@drawable/ic_star_black_24dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:tint="#FFFF00"
+                    app:srcCompat="@drawable/ic_star_black_24dp" />
+
+            </LinearLayout>
 
                 <TextView
                     android:id="@+id/situation"
