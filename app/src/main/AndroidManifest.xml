@@ -23,6 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".controller.RestaurantActivity"></activity>
+        <activity android:name=".controller.ProfileActivity" />
         <activity android:name=".controller.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +62,7 @@
         <activity android:name=".controller.Register_form" />
         <activity android:name=".controller.Menu_Activity" />
         <activity android:name=".controller.Wait_Activity" />
-        <activity android:name=".controller.MainActivity"></activity>
+        <activity android:name=".controller.MainActivity" />
         <!--
 meta-data
             android:name="com.google.android.geo.API_KEY"

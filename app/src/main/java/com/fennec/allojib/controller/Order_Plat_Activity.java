@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
     public Button btn_maps,btn_valider_commande;
 
-    public Button btnDatePicker, btnTimePicker;
+    public ImageButton btnDatePicker, btnTimePicker;
     public EditText txtDate, txtTime;
     public  TextInputEditText personne_conserner, tel_personne, note_client;
 
@@ -66,10 +67,6 @@ public class Order_Plat_Activity extends AppCompatActivity {
     private int mYear, mMonth, mDay, mHour, mMinute;
 
     public RadioButton btn_radio_l1,btn_radio_l2,btn_radio_moi,btn_radio_autre;
-
-    public Handler handler = new Handler();
-    public int progress = 0;
-    public ProgressBar progressBar4;
 
     public int lastPosition;
 
@@ -97,8 +94,8 @@ public class Order_Plat_Activity extends AppCompatActivity {
         btn_radio_moi = (RadioButton) findViewById(R.id.btn_radio_moi);
         btn_radio_autre = (RadioButton) findViewById(R.id.btn_radio_autre);
 
-        btnDatePicker=(Button)findViewById(R.id.btn_date);
-        btnTimePicker=(Button)findViewById(R.id.btn_time);
+        btnDatePicker=(ImageButton)findViewById(R.id.btn_date);
+        btnTimePicker=(ImageButton)findViewById(R.id.btn_time);
         txtDate=(EditText)findViewById(R.id.in_date);
         txtTime=(EditText)findViewById(R.id.in_time);
         btn_maps = (Button) findViewById(R.id.btn_maps);
@@ -111,9 +108,6 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
         btn_valider_commande = (Button) findViewById(R.id.btn_valider_commande);
 
-        progressBar4 = (ProgressBar) findViewById(R.id.progressBar4);
-        progressBar4.setMax(100);
-        progress = progressBar4.getProgress();
 
         btnDatePicker.setVisibility(View.GONE);
         btnTimePicker.setVisibility(View.GONE);

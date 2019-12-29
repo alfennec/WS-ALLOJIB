@@ -16,6 +16,7 @@ import com.fennec.allojib.config.JsonUrlPassOrderPlat;
 import com.fennec.allojib.config.JsonUrlPlat;
 import com.fennec.allojib.config.JsonUrlRestaurant;
 import com.fennec.allojib.config.constant;
+import com.fennec.allojib.controller.ui.profile.ProfileFragment;
 import com.fennec.allojib.repository.CategoryPlatRepository;
 import com.fennec.allojib.repository.ClientRepository;
 import com.fennec.allojib.repository.OrderPlatRepository;
@@ -32,6 +33,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -69,7 +72,7 @@ public class Home_Activity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_panier, R.id.nav_commande, R.id.nav_profil,
+                R.id.nav_home, R.id.nav_panier, R.id.nav_commande, R.id.nav_profile,
                 R.id.nav_quitter)
                 .setDrawerLayout(drawer)
                 .build();
@@ -89,6 +92,7 @@ public class Home_Activity extends AppCompatActivity {
                     //Log.d("TAG_CLICK", "onDestinationChanged: ");
 
                     Home_Activity.this.finish();
+
                 }
             }
         });

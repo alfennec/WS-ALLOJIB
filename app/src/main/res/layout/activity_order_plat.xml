@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="5dp"
+    android:padding="10dp"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
@@ -22,30 +22,33 @@
             android:text="Votre Commande : "
             android:textSize="24sp"
             android:textColor="@color/colorAccent"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:layout_marginBottom="20dp"
             />
 
         <TextView
             android:id="@+id/textView"
-            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="Mode de livraison : "
             android:textSize="18sp"
             android:textColor="@color/colorAccent"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3" >
+            android:layout_weight="3"
+            android:layout_marginBottom="20dp">
 
             <RadioButton
                 android:id="@+id/btn_radio_l1"
@@ -66,7 +69,8 @@
             android:layout_weight="3"
             android:orientation="horizontal"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:layout_marginBottom="20dp">
 
             <EditText
                 android:id="@+id/in_date"
@@ -74,14 +78,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_date"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="DATE"
-                android:textColor="#fff"
-                android:background="@drawable/rounded_corner_button"/>
+                android:background="@null"
+                android:src="@drawable/ic_date_range_black_24dp"
+                android:tint="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/in_time"
@@ -89,14 +93,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/btn_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Temps"
-                android:textColor="#fff"
-                android:background="@drawable/rounded_corner_button"/>
+                android:background="@null"
+                android:src="@drawable/ic_access_time_black_24dp"
+                android:tint="@color/colorPrimary" />
         </LinearLayout>
 
 
@@ -109,12 +113,14 @@
             android:text="Collecteur : "
             android:textSize="18sp"
             android:textColor="@color/colorAccent"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3" >
+            android:layout_weight="3"
+            android:layout_marginBottom="20dp">
 
             <RadioButton
                 android:id="@+id/btn_radio_moi"
@@ -144,7 +150,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:layout_marginBottom="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tel_personne"
@@ -153,45 +160,51 @@
                 android:hint="Numéro de la personne conserner" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/adresse_maps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Adresse" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/btn_maps"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_weight="3"
-            android:text="Ajouter une adresse"
-            android:textColor="#fff"
-            android:background="@drawable/rounded_corner_button"/>
+            android:layout_marginBottom="20dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/adresse_maps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Adresse" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_maps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="+"
+                android:textColor="#fff"
+                android:background="@drawable/rounded_corner_button"/>
+
+        </LinearLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:layout_marginBottom="30dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_client"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Note" />
+                android:hint="Note"
+                android:inputType="text"
+                android:background="@color/backLabel"/>
         </com.google.android.material.textfield.TextInputLayout>
-
-        <ProgressBar
-            android:id="@+id/progressBar4"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3" />
 
         <Button
             android:id="@+id/btn_valider_commande"
