@@ -47,6 +47,14 @@
                 android:text="prix_plat"
                 android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/contenu_plat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="contenu_plat" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

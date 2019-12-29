@@ -89,7 +89,7 @@ public class JsonUrlClient implements IonHandler {
                     json_client.tel     = oneObject.getString("tel");
                     json_client.adresse = oneObject.getString("adresse");
                     json_client.ville   = oneObject.getString("ville");
-                    json_client.sexe    = Integer.parseInt(oneObject.getString("pass"));
+                    json_client.sexe    = Integer.parseInt(oneObject.getString("sexe"));
 
                 }
                 catch (JSONException e)

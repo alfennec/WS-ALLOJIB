@@ -44,6 +44,8 @@ import com.fennec.allojib.repository.RestaurantRepository;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -367,18 +369,29 @@ public class Order_Plat_Activity extends AppCompatActivity {
         String collecteur = "&collecteur="+current_order.collecteur;
         String nom_collecteur = "&nom_collecteur="+current_order.nom_collecteur;
         String num_collecteur = "&num_collecteur="+current_order.num_collecteur;
+
         String adresse = "&adresse="+current_order.adresse;
         String note = "&note="+current_order.note ;
+
+        try {
+            adresse = "&adresse="+URLEncoder.encode(current_order.adresse, "UTF-8");
+            note = "&note="+URLEncoder.encode(current_order.note, "UTF-8");
+        }catch (Exception e) {}
+
+
         String id_client = "&id_client="+current_order.id_client;
         String situation = "&situation="+current_order.situation;
 
         url_informations = url_informations+total+mode_livraison+date_order+time_order+collecteur+nom_collecteur+num_collecteur+adresse+note+id_client+situation;
 
-        //Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ url_informations);
+
+
+
+        Log.d("TAG_JSON_DECODE", "-----------------------------> TO SEND "+ url_informations);
 
         JsonUrlPassOrderPlat jsonUrlPassOrderPlat = new JsonUrlPassOrderPlat(url_informations, main, main.lastPosition);
 
-        Toast.makeText(main,"total : "+current_order.total, Toast.LENGTH_SHORT ).show();
+        Toast.makeText(main,"total : "+current_order.total+" MAD", Toast.LENGTH_SHORT ).show();
 
     }
 
@@ -394,6 +407,8 @@ public class Order_Plat_Activity extends AppCompatActivity {
             if(OrderPlatRepository.list_orderPlat.get(i).id_passOrder == 0)
             {
                 OrderPlatRepository.list_orderPlat.get(i).id_passOrder = PassOrderPlatRepository.list_passOrderPlat.get(main.lastPosition).id;
+
+                Log.d("TAG_JSON_ORDER_DETAIL", "TO SEND "+ OrderPlatRepository.list_orderPlat.get(i).id_passOrder);
 
                 String url_informations = constant.url_host+"json/setOrderPlat.php?";
 

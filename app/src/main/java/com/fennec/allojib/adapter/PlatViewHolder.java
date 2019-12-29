@@ -21,7 +21,7 @@ import com.fennec.allojib.repository.OrderPlatRepository;
 public class PlatViewHolder extends ChildViewHolder
 {
 
-    private TextView intituler_plat, prix_plat;
+    private TextView intituler_plat, prix_plat, contenu_plat;
     public ImageView image_plat;
     public ImageButton add_plat;
 
@@ -30,6 +30,7 @@ public class PlatViewHolder extends ChildViewHolder
         super(itemView);
         intituler_plat = itemView.findViewById(R.id.intituler_plat);
         prix_plat = itemView.findViewById(R.id.prix_plat);
+        contenu_plat = itemView.findViewById(R.id.contenu_plat);
         image_plat = itemView.findViewById(R.id.image_plat);
         add_plat = itemView.findViewById(R.id.add_plat);
     }
@@ -38,6 +39,7 @@ public class PlatViewHolder extends ChildViewHolder
     {
         intituler_plat.setText(plat.intituler);
         prix_plat.setText(""+plat.prix+" MAD");
+        contenu_plat.setText(plat.contenue);
 
         Glide.with(CategoryPlat_Activity.main).load(constant.url_host+"/upload/plat/"+plat.img).into(image_plat);
 

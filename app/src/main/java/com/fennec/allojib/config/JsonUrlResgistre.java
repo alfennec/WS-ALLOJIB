@@ -68,7 +68,7 @@ public class JsonUrlResgistre implements IonHandler {
 
     public void ConditionResult(String result)
     {
-        if(result.equals("succes"))
+        if(Integer.parseInt(result) == 400)
         {
             result_succes = true;
         }
@@ -97,7 +97,7 @@ public class JsonUrlResgistre implements IonHandler {
                     json_client.tel     = oneObject.getString("tel");
                     json_client.adresse = oneObject.getString("adresse");
                     json_client.ville   = oneObject.getString("ville");
-                    json_client.sexe    = Integer.parseInt(oneObject.getString("pass"));
+                    json_client.sexe    = Integer.parseInt(oneObject.getString("sexe"));
 
                 }
                 catch (JSONException e)

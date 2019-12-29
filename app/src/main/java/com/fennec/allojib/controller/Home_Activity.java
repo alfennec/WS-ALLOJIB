@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class Home_Activity extends AppCompatActivity {
 
     public static Home_Activity main;
 
+    public static String MY_PREFS_NAME = "first_log";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +94,8 @@ public class Home_Activity extends AppCompatActivity {
                     //Toast.makeText(Home_Activity.this, "hhhhhhhhhh", Toast.LENGTH_LONG).show();
                     //Log.d("TAG_CLICK", "onDestinationChanged: ");
 
-                    Home_Activity.this.finish();
+                    MainActivity.quitter();
+                    Home_Activity.this.finishAffinity();
 
                 }
             }

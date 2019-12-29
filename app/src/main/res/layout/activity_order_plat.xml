@@ -175,7 +175,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/adresse_maps"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:hint="Adresse" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,9 +200,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/note_client"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:hint="Note"
                 android:inputType="text"
+                android:text="Rien"
                 android:background="@color/backLabel"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -211,7 +212,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="Finalizer la commande"
+            android:text="Finaliser la commande"
             android:textSize="24dp"
             android:textColor="#fff"
             android:textStyle="bold"

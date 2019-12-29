@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         if(verifyIfBlank(editText_email) && verifyIfBlank(editText_pass))
                         {
-                            String url_informations = "/json/getClient.php?";
+                            String url_informations = "json/getClient.php?";
 
                             String email = "email="+editText_email.getEditText().getText().toString();
                             String pass = "&pass="+editText_pass.getEditText().getText().toString();
@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                             url_informations = constant.url_host+url_informations+email+pass;
 
                             Toast.makeText(main,""+editText_email.getEditText().getText().toString(), Toast.LENGTH_SHORT).show();
+
+                            Log.d("TAG_DEPLOY", " app : "+url_informations);
 
                             jsonClient = new JsonUrlClient(url_informations, main);
                         }else
@@ -204,6 +206,23 @@ public class MainActivity extends AppCompatActivity {
         toast.setView(layout);
         toast.show();
         /** end teaosot **/
+    }
+
+    public static void quitter()
+    {
+        SharedPreferences prefs = main.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor edit= prefs.edit();
+
+        edit.putInt("id", 0);
+        edit.putString("email", "vide");
+        edit.putString("nom", "vide");
+        edit.putString("prenom", "vide");
+        edit.putString("tel", "vide");
+        edit.putString("adresse", "vide");
+        edit.putString("ville", "vide");
+        edit.putInt("sexe", 0);
+
+        edit.commit();
     }
 
 }

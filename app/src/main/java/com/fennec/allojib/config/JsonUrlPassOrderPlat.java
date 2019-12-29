@@ -76,7 +76,7 @@ public class JsonUrlPassOrderPlat implements IonHandler {
         {
             int id_passOrderPlat = Integer.parseInt(result);
 
-            if(id_passOrderPlat % 2 == 1 || id_passOrderPlat % 2 == 0)
+            if(id_passOrderPlat != 406)
             {
                 PassOrderPlatRepository.list_passOrderPlat.get(position).id = id_passOrderPlat;
 
