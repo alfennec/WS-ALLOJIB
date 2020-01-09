@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -73,6 +74,8 @@ public class Order_Plat_Activity extends AppCompatActivity {
     public int lastPosition;
 
     public boolean form_right=true;
+
+    public static ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -422,6 +425,8 @@ public class Order_Plat_Activity extends AppCompatActivity {
                 Log.d("TAG_JSON_ORDER_DETAIL", "TO SEND "+ url_informations);
 
                 JsonUrlOrderPlat jsonUrlOrderPlat = new JsonUrlOrderPlat(url_informations, main);
+
+                dialog = ProgressDialog.show(main, "", "Traitement de données. Veulliez attendre ...", true);
             }
         }
 
@@ -435,6 +440,8 @@ public class Order_Plat_Activity extends AppCompatActivity {
         intent.putExtra("id_order", PassOrderPlatRepository.list_passOrderPlat.get(main.lastPosition).id);
         main.startActivity(intent);
         main.finish();
+
+        dialog.dismiss();
     }
 
     public static void getNewAdpter()

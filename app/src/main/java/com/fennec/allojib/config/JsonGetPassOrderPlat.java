@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.fennec.allojib.controller.Home_Activity;
+import com.fennec.allojib.controller.ui.commande.CommandeFragment;
 import com.fennec.allojib.entity.Client;
 import com.fennec.allojib.entity.PassOrderPlat;
 import com.fennec.allojib.myInterface.IonHandler;
@@ -18,8 +19,12 @@ import org.json.JSONObject;
 
 public class JsonGetPassOrderPlat implements IonHandler {
 
-    public JsonGetPassOrderPlat(String link , final Context ctx)
+    public int choice_activity;
+
+    public JsonGetPassOrderPlat(String link , final Context ctx , int choice_activity)
     {
+        this.choice_activity = choice_activity;
+
         Ion.with(ctx)
                 .load(link)
                 .asString()
@@ -48,7 +53,14 @@ public class JsonGetPassOrderPlat implements IonHandler {
 
         /** after write you code from  main **/
 
-        Home_Activity.OnJsonSucces();
+        if(choice_activity == 1)
+        {
+            Home_Activity.OnJsonSucces();
+        }else
+            {
+                CommandeFragment.onSucces();
+            }
+
     }
 
     @Override

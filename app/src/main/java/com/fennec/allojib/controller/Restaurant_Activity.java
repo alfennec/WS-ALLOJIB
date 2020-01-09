@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,6 +40,8 @@ public class Restaurant_Activity extends AppCompatActivity {
 
     public ImageButton btn_search;
     public EditText editText_restaurant;
+
+    public static ProgressDialog dialog;
 
 
     @Override

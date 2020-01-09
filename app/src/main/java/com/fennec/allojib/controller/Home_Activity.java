@@ -96,7 +96,6 @@ public class Home_Activity extends AppCompatActivity {
 
                     MainActivity.quitter();
                     Home_Activity.this.finishAffinity();
-
                 }
             }
         });
@@ -116,7 +115,7 @@ public class Home_Activity extends AppCompatActivity {
         String url_informations = constant.url_host+"json/getPassOrderPlat.php?";
         String id_client = "id_client="+ ClientRepository.main_Client.id;
         url_informations = url_informations+id_client;
-        JsonGetPassOrderPlat jsonGetPassOrderPlat = new JsonGetPassOrderPlat(url_informations, main);
+        JsonGetPassOrderPlat jsonGetPassOrderPlat = new JsonGetPassOrderPlat(url_informations, main,1);
 
         /** get RESTAURANT & CATEGORIE PLAT **/
         url_informations = constant.url_host+"/json/getTable.php?table=";
@@ -128,8 +127,6 @@ public class Home_Activity extends AppCompatActivity {
     public static void OnJsonSucces()
     {
         //localhost/livraison/json/getOrderPlat.php?id_order=17
-
-
 
         for (int i = 0; i < PassOrderPlatRepository.list_passOrderPlat.size(); i++)
         {
@@ -152,7 +149,7 @@ public class Home_Activity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
        getMenuInflater().inflate(R.menu.home_, menu);
 
-        return true;
+       return true;
     }
 
     @Override

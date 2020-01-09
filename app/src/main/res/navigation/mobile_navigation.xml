@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_panier" >
         <action
             android:id="@+id/action_nav_gallery_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
+            app:destination="@id/nav_coursier" />
     </fragment>
 
     <fragment
@@ -32,7 +32,7 @@
         tools:layout="@layout/fragment_commande" >
         <action
             android:id="@+id/action_nav_gallery_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
+            app:destination="@id/nav_coursier" />
     </fragment>
 
     <fragment
@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_nav_gallery_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
+            app:destination="@id/nav_coursier" />
     </fragment>
 
     <fragment
@@ -50,17 +50,17 @@
         android:label="Quitter">
         <action
             android:id="@+id/action_nav_gallery_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
+            app:destination="@id/nav_coursier" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.fennec.allojib.controller.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" >
+        android:id="@+id/nav_coursier"
+        android:name="com.fennec.allojib.controller.ui.coursier.CoursierFragment"
+        android:label="Mes courses"
+        tools:layout="@layout/fragment_coursier" >
         <action
             android:id="@+id/action_nav_slideshow_to_nav_tools"
-            app:destination="@id/nav_tools" />
+            app:destination="@id/nav_profile" />
     </fragment>
 
     <fragment

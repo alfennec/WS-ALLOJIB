@@ -2,6 +2,7 @@ package com.fennec.allojib.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextInputLayout editText_email;
     TextInputLayout editText_pass;
+
+    public static ProgressDialog dialog;
 
     public Handler handler = new Handler();
 
@@ -91,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("TAG_DEPLOY", " app : "+url_informations);
 
                             jsonClient = new JsonUrlClient(url_informations, main);
+
+                            dialog = ProgressDialog.show(main, "", "Traitement de données. Veulliez attendre ...", true);
                         }else
                             {
                                 OnFailedLogin();
@@ -129,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static void OnSuccesLogin()
     {
+        dialog.dismiss();
+
         Costum_toast("Connexion faite avec succés !! ");
 
         Intent intent = new Intent(main, Home_Activity.class);
