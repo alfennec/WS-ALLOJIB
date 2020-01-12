@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -24,6 +25,8 @@ import com.fennec.allojib.config.JsonGetPassOrderPlat;
 import com.fennec.allojib.config.constant;
 import com.fennec.allojib.controller.Commande_Activity;
 import com.fennec.allojib.controller.Commande_coursier;
+import com.fennec.allojib.controller.CoursierActivity;
+import com.fennec.allojib.controller.Restaurant_Activity;
 import com.fennec.allojib.controller.ui.commande.CommandeFragment;
 import com.fennec.allojib.repository.ClientRepository;
 import com.fennec.allojib.repository.CoursierRepository;
@@ -48,26 +51,45 @@ public class CoursierFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         coursierViewModel =  ViewModelProviders.of(this).get(CoursierViewModel.class);
-        root = inflater.inflate(R.layout.fragment_coursier, container, false);
 
-        main = this;
+        if(CoursierRepository.list_coursier.size() == 0)
+        {
+            root = inflater.inflate(R.layout.not_commande, container, false);
+            main = this;
+            Button btn_rafraichir = (Button) root.findViewById(R.id.btn_rafraichir);
 
-        //final TextView textView = root.findViewById(R.id.text_commande);
+            btn_rafraichir.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(main.getContext(), CoursierActivity.class);
+                    main.startActivity(intent);
+                }
+            });
 
-        /** clear data for update data **/
-        CoursierRepository.list_coursier.clear();
+        }else {
+            root = inflater.inflate(R.layout.fragment_coursier, container, false);
+
+            main = this;
+
+            //final TextView textView = root.findViewById(R.id.text_commande);
+
+            /** clear data for update data **/
+            CoursierRepository.list_coursier.clear();
 
 
-        /** get PASS ORDER **/
-        //localhost/livraison/json/getPassOrderPlat.php?id_client=1
+            /** get PASS ORDER **/
+            //localhost/livraison/json/getPassOrderPlat.php?id_client=1
 
-        String url_informations = constant.url_host+"json/getCoursier.php?";
-        String id_client = "id_client="+ ClientRepository.main_Client.id;
-        url_informations = url_informations+id_client;
+            String url_informations = constant.url_host+"json/getCoursier.php?";
+            String id_client = "id_client="+ ClientRepository.main_Client.id;
+            url_informations = url_informations+id_client;
 
-        JsonGetCoursier jsonGetCoursier = new JsonGetCoursier(url_informations, inflater.getContext());
+            JsonGetCoursier jsonGetCoursier = new JsonGetCoursier(url_informations, inflater.getContext());
 
-        dialog = ProgressDialog.show(inflater.getContext(), "", "Traitement de données. Veulliez attendre ...", true);
+            dialog = ProgressDialog.show(inflater.getContext(), "", "Traitement de données. Veulliez attendre ...", true);
+        }
 
         return root;
     }

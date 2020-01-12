@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Pas de connexion internet !!!"
+        android:text="Aucune commande !!!"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,14 +32,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.16000003"
-        app:srcCompat="@drawable/no_intenet" />
+        app:srcCompat="@drawable/cart_empty" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Veuillez vous connecter...."
+        android:text="Votre Panier et vide ...."
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:background="@drawable/rounded_corner_button"
-        android:text="Rafraichir"
+        android:text="REMPLIR LE PANIER"
         android:textColor="#fff"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"

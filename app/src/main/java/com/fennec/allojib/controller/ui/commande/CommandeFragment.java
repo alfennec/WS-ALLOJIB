@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.fennec.allojib.adapter.PassOrderPlatAdapter;
 import com.fennec.allojib.config.JsonGetPassOrderPlat;
 import com.fennec.allojib.config.constant;
 import com.fennec.allojib.controller.Commande_Activity;
+import com.fennec.allojib.controller.Restaurant_Activity;
 import com.fennec.allojib.repository.ClientRepository;
 import com.fennec.allojib.repository.OrderPlatRepository;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
@@ -42,35 +44,46 @@ public class CommandeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         commandeViewModel = ViewModelProviders.of(this).get(CommandeViewModel.class);
-        root = inflater.inflate(R.layout.fragment_commande, container, false);
 
-        main = this;
-
-        //final TextView textView = root.findViewById(R.id.text_commande);
-
-        /** clear data for update data **/
-
-        OrderPlatRepository.list_orderPlat.clear();
-        PassOrderPlatRepository.list_passOrderPlat.clear();
-
-        /** get PASS ORDER **/
-        //localhost/livraison/json/getPassOrderPlat.php?id_client=1
-        String url_informations = constant.url_host+"json/getPassOrderPlat.php?";
-        String id_client = "id_client="+ ClientRepository.main_Client.id;
-        url_informations = url_informations+id_client;
-        JsonGetPassOrderPlat jsonGetPassOrderPlat = new JsonGetPassOrderPlat(url_informations, inflater.getContext(), 2);
-
-        dialog = ProgressDialog.show(inflater.getContext(), "", "Traitement de données. Veulliez attendre ...", true);
-
-
-        commandeViewModel.getText().observe(this, new Observer<String>()
+        if(PassOrderPlatRepository.list_passOrderPlat.size() == 0)
         {
-            @Override
-            public void onChanged(@Nullable String s)
+            root = inflater.inflate(R.layout.not_commande, container, false);
+            main = this;
+            Button btn_rafraichir = (Button) root.findViewById(R.id.btn_rafraichir);
+
+            btn_rafraichir.setOnClickListener(new View.OnClickListener()
             {
-               // textView.setText(s);
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(main.getContext(), Restaurant_Activity.class);
+                    main.startActivity(intent);
+                }
+            });
+
+        }else {
+            root = inflater.inflate(R.layout.fragment_commande, container, false);
+
+            main = this;
+
+            //final TextView textView = root.findViewById(R.id.text_commande);
+
+            /** clear data for update data **/
+
+            OrderPlatRepository.list_orderPlat.clear();
+            PassOrderPlatRepository.list_passOrderPlat.clear();
+
+            /** get PASS ORDER **/
+            //localhost/livraison/json/getPassOrderPlat.php?id_client=1
+            String url_informations = constant.url_host+"json/getPassOrderPlat.php?";
+            String id_client = "id_client="+ ClientRepository.main_Client.id;
+            url_informations = url_informations+id_client;
+            JsonGetPassOrderPlat jsonGetPassOrderPlat = new JsonGetPassOrderPlat(url_informations, inflater.getContext(), 2);
+
+            dialog = ProgressDialog.show(inflater.getContext(), "", "Traitement de données. Veulliez attendre ...", true);
+
             }
-        });
+
         return root;
     }
 

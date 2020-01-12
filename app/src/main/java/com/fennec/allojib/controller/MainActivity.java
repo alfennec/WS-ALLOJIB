@@ -116,6 +116,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }else {
             setContentView(R.layout.not_connected);
+
+            Button btn_rafraichir = (Button) findViewById(R.id.btn_rafraichir);
+
+            btn_rafraichir.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    main.finish();
+                    startActivity(main.getIntent());
+                }
+            });
         }
 
     }
