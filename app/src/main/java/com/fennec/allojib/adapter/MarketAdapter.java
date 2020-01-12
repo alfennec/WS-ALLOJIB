@@ -1,31 +1,27 @@
 package com.fennec.allojib.adapter;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fennec.allojib.R;
 import com.fennec.allojib.config.constant;
-import com.fennec.allojib.controller.Menu_Activity;
+import com.fennec.allojib.controller.Market_Activity;
 import com.fennec.allojib.controller.Restaurant_Activity;
+import com.fennec.allojib.entity.Market;
 import com.fennec.allojib.entity.Restaurant;
-import com.fennec.allojib.repository.RestaurantRepository;
 
 import java.util.List;
 
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHolder> {
+public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.MyViewHolder> {
 
-    public List<Restaurant> list;
+    public List<Market> list;
     public boolean showAdd = false;
 
     public class MyViewHolder extends RecyclerView.ViewHolder
@@ -45,21 +41,20 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             prix = (TextView) view.findViewById(R.id.prix);
             image_restaurant = (ImageView) view.findViewById(R.id.image_restaurant);
             image_restaurant2 = (ImageView) view.findViewById(R.id.image_restaurant2);
-
         }
     }
 
-    public RestaurantAdapter(List<Restaurant> list)
+    public MarketAdapter(List<Market> list)
     {
         this.list = list;
     }
 
     @Override
-    public RestaurantAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public MarketAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_restaurant, parent, false);
 
-        return new RestaurantAdapter.MyViewHolder(itemView);
+        return new MarketAdapter.MyViewHolder(itemView);
     }
 
     @Override
@@ -71,14 +66,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(final RestaurantAdapter.MyViewHolder holder, final int position)
+    public void onBindViewHolder(final MarketAdapter.MyViewHolder holder, final int position)
     {
-        final Restaurant myRestaurant = list.get(position);
-        holder.intituler.setText(myRestaurant.intituler);
-        holder.specialiter.setText("Spécialiter : "+myRestaurant.specialiter);
-        holder.prix.setText(myRestaurant.prix_transp+" MAD");
+        final Market myMarket = list.get(position);
+        holder.intituler.setText(myMarket.intituler);
+        holder.specialiter.setText("");
+        holder.prix.setText(myMarket.prix_transp+" MAD");
 
-        if(myRestaurant.situation == 1)
+        if(myMarket.situation == 1)
         {
             holder.situation.setText("Ouvert");
 
@@ -86,22 +81,20 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
             holder.situation.setText("Fermer");
         }
 
-        Glide.with(Restaurant_Activity.main).load(constant.url_host+"/upload/restaurant/"+myRestaurant.restaurant_image).into(holder.image_restaurant);
-        Glide.with(Restaurant_Activity.main).load(constant.url_host+"/upload/asset/courbes3.png").centerCrop().into(holder.image_restaurant2);
+        Glide.with(Market_Activity.main).load(constant.url_host+"/upload/market/"+myMarket.market_image).into(holder.image_restaurant);
+        Glide.with(Market_Activity.main).load(constant.url_host+"/upload/asset/courbes3.png").centerCrop().into(holder.image_restaurant2);
 
-
-        Log.d("TAG_GLIDE", "onBindViewHolder: "+constant.url_host+"/upload/restaurant/"+myRestaurant.restaurant_image);
 
         holder.parent.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Restaurant_Activity.to_newIntent(myRestaurant.id);
+                Market_Activity.to_newIntent(myMarket.id);
             }
         });
 
-        Log.d("TAG_JSON", "onClick: ADAPTER RESTAURANT " + myRestaurant.intituler+" "+myRestaurant.specialiter+" "+myRestaurant.prix_transp+" "+myRestaurant.situation+" "+myRestaurant.restaurant_image);
+        Log.d("TAG_JSON", "onClick: ADAPTER RESTAURANT " + myMarket.intituler+" "+myMarket.prix_transp+" "+myMarket.situation+" "+myMarket.market_image);
     }
 
     @Override

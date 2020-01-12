@@ -11,18 +11,29 @@ import android.os.Bundle;
 
 import com.fennec.allojib.R;
 import com.fennec.allojib.config.JsonGetOrderPlat;
+import com.fennec.allojib.config.JsonGetOrderProduct;
 import com.fennec.allojib.config.JsonGetPassOrderPlat;
+import com.fennec.allojib.config.JsonGetPassOrderProduct;
 import com.fennec.allojib.config.JsonUrlCategoryPlat;
+import com.fennec.allojib.config.JsonUrlCategoryProduct;
+import com.fennec.allojib.config.JsonUrlMarket;
 import com.fennec.allojib.config.JsonUrlPassOrderPlat;
 import com.fennec.allojib.config.JsonUrlPlat;
+import com.fennec.allojib.config.JsonUrlProduct;
 import com.fennec.allojib.config.JsonUrlRestaurant;
 import com.fennec.allojib.config.constant;
 import com.fennec.allojib.controller.ui.profile.ProfileFragment;
+import com.fennec.allojib.entity.PassOrderProduct;
 import com.fennec.allojib.repository.CategoryPlatRepository;
+import com.fennec.allojib.repository.CategoryProductRepository;
 import com.fennec.allojib.repository.ClientRepository;
+import com.fennec.allojib.repository.MarketRepository;
 import com.fennec.allojib.repository.OrderPlatRepository;
+import com.fennec.allojib.repository.OrderProductRepository;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
+import com.fennec.allojib.repository.PassOrderProductRepository;
 import com.fennec.allojib.repository.PlatRepository;
+import com.fennec.allojib.repository.ProductRepository;
 import com.fennec.allojib.repository.RestaurantRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -110,18 +121,37 @@ public class Home_Activity extends AppCompatActivity {
         OrderPlatRepository.list_orderPlat.clear();
         PassOrderPlatRepository.list_passOrderPlat.clear();
 
-        /** get PASS ORDER **/
+        MarketRepository.list_market.clear();
+        ProductRepository.list_product.clear();
+        CategoryProductRepository.list_categoryProduct.clear();
+        OrderProductRepository.list_orderProduct.clear();
+        PassOrderProductRepository.list_passOrderProduct.clear();
+
+        /** get PASS ORDER PLAT **/
         //localhost/livraison/json/getPassOrderPlat.php?id_client=1
         String url_informations = constant.url_host+"json/getPassOrderPlat.php?";
         String id_client = "id_client="+ ClientRepository.main_Client.id;
         url_informations = url_informations+id_client;
         JsonGetPassOrderPlat jsonGetPassOrderPlat = new JsonGetPassOrderPlat(url_informations, main,1);
 
+        /** get PASS ORDER PRODUCT **/
+        //localhost/livraison/json/getPassOrderPlat.php?id_client=1
+        url_informations = constant.url_host+"json/getPassOrderProduct.php?";
+        id_client = "id_client="+ ClientRepository.main_Client.id;
+        url_informations = url_informations+id_client;
+        JsonGetPassOrderProduct jsonGetPassOrderProduct = new JsonGetPassOrderProduct(url_informations, main,1);
+
         /** get RESTAURANT & CATEGORIE PLAT **/
         url_informations = constant.url_host+"/json/getTable.php?table=";
         JsonUrlPlat jsonUrlPlat = new JsonUrlPlat(url_informations+"tbl_plat", main);
         JsonUrlRestaurant jsonRestaurant = new JsonUrlRestaurant(url_informations+"tbl_retaurant", main);
         JsonUrlCategoryPlat jsonUrlCategoryPlat = new JsonUrlCategoryPlat(url_informations+"tbl_category_plat", main);
+
+        /** get MARKET & CATEGORIE PRODUCT **/
+        url_informations = constant.url_host+"/json/getTable.php?table=";
+        JsonUrlProduct jsonUrlProduct = new JsonUrlProduct(url_informations+"tbl_product", main);
+        JsonUrlMarket jsonMarket = new JsonUrlMarket(url_informations+"tbl_market", main);
+        JsonUrlCategoryProduct jsonUrlCategoryProduct = new JsonUrlCategoryProduct(url_informations+"tbl_category_product", main);
     }
 
     public static void OnJsonSucces()
@@ -140,6 +170,25 @@ public class Home_Activity extends AppCompatActivity {
             Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ id_order);
 
             JsonGetOrderPlat jsonGetOrderPlat = new JsonGetOrderPlat(url_informations, main);
+        }
+    }
+
+    public static void OnJsonSucces2()
+    {
+        //localhost/livraison/json/getOrderProduct.php?id_order=17
+
+        for (int i = 0; i < PassOrderProductRepository.list_passOrderProduct.size(); i++)
+        {
+            String url_informations = constant.url_host+"json/getOrderProduct.php?";
+
+            String id_order = "id_order="+ PassOrderProductRepository.list_passOrderProduct.get(i).id;
+
+            url_informations = url_informations+id_order;
+
+            Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ url_informations);
+            Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ id_order);
+
+            JsonGetOrderProduct jsonGetOrderProduct = new JsonGetOrderProduct(url_informations, main);
         }
     }
 

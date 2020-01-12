@@ -80,12 +80,12 @@
         tools:layout="@layout/fragment_share" >
         <action
             android:id="@+id/action_nav_share_to_nav_send"
-            app:destination="@id/nav_send" />
+            app:destination="@id/nav_product" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_send"
-        android:name="com.fennec.allojib.controller.ui.send.SendFragment"
+        android:id="@+id/nav_product"
+        android:name="com.fennec.allojib.controller.ui.product.ProductFragment"
         android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+        tools:layout="@layout/fragment_product" />
 </navigation>

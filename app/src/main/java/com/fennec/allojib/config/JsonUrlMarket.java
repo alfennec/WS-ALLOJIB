@@ -1,0 +1,108 @@
+package com.fennec.allojib.config;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.fennec.allojib.entity.Market;
+import com.fennec.allojib.entity.Restaurant;
+import com.fennec.allojib.myInterface.IonHandler;
+import com.fennec.allojib.repository.MarketRepository;
+import com.fennec.allojib.repository.RestaurantRepository;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class JsonUrlMarket implements IonHandler {
+
+    public boolean result_succes = false;
+    public boolean result_error = false;
+
+
+    @Override
+    public void onSucces(Object obj)
+    {
+        //Restaurant_Activity.onLoadRestaurant();
+    }
+
+    @Override
+    public void onFailed(Object obj)
+    {
+
+    }
+    public JsonUrlMarket(String link , final Context ctx)
+    {
+        Ion.with(ctx)
+                .load(link)
+                .asString()
+                .setCallback(new FutureCallback<String>()
+                {
+                    @Override
+                    public void onCompleted(Exception e, String result)
+                    {
+                        if(result != null)
+                        {
+                            Log.d("TAG_PRODUCT", "2 - GET FROM SERVER MARKET : " + result);
+                            ConditionResult( result );
+                        }
+                    }
+                });
+
+    }
+
+    public void ConditionResult(String result)
+    {
+        if(result.equals("succes"))
+        {
+            result_succes = true;
+        }
+        else if(result.equals("error"))
+        {
+            result_error = true;
+        }
+        else {
+            result_succes = true;
+            parse_data(result);
+            onSucces(result.toString());
+        }
+    }
+
+    public void parse_data(String result)
+    {
+        try
+        {
+            //JSONObject jObject = new JSONObject(result);
+            JSONArray jArray = new JSONArray(result);
+
+            for (int i=0; i < jArray.length(); i++)
+            {
+                Market json_market = new Market();
+
+                try
+                {
+                    JSONObject oneObject = jArray.getJSONObject(i);
+
+                    json_market.id      = Integer.parseInt(oneObject.getString("id"));
+                    json_market.intituler   = oneObject.getString("intituler");
+                    json_market.situation   = Integer.parseInt(oneObject.getString("situation"));
+                    json_market.prix_transp   = Integer.parseInt(oneObject.getString("prix_transp"));
+                    json_market.market_image   = oneObject.getString("market_image");
+                }
+                catch (JSONException e)
+                {
+                    //Log.e("tag_json", ""+e);
+                }
+
+                MarketRepository.list_market.add(json_market);
+
+
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+}

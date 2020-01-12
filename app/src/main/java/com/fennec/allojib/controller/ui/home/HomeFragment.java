@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.fennec.allojib.R;
 import com.fennec.allojib.controller.CoursierActivity;
 import com.fennec.allojib.controller.MapsActivity2;
+import com.fennec.allojib.controller.Market_Activity;
 import com.fennec.allojib.controller.Restaurant_Activity;
 import com.fennec.allojib.controller.ui.profile.ProfileFragment;
 import com.fennec.allojib.controller.ui.restaurant.RestaurantFragment;
@@ -61,7 +62,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                Costum_toast("On Construction ");
+                //Costum_toast("On Construction ");
+
+                Intent intent = new Intent(inflater.getContext(), Market_Activity.class);
+                startActivity(intent);
             }
         });
 

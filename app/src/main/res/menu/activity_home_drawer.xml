@@ -9,20 +9,10 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Accueil" />
 
-        <item
+        <!--item
             android:id="@+id/nav_panier"
             android:icon="@drawable/ic_add_shopping_cart_black_24dp"
-            android:title="Mon panier" />
-
-        <item
-            android:id="@+id/nav_commande"
-            android:icon="@drawable/ic_format_list_bulleted_black_24dp"
-            android:title="Mes commandes" />
-
-        <item
-            android:id="@+id/nav_coursier"
-            android:icon="@drawable/ic_local_taxi_black_24dp"
-            android:title="Mes courses" />
+            android:title="Mon panier" /-->
 
         <item
             android:id="@+id/nav_profile"
@@ -35,17 +25,23 @@
             android:title="Quitter" />
     </group>
 
-    <!--item android:title="Communicate">
+    <item android:title="Historique des commandes">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
+                android:id="@+id/nav_commande"
+                android:icon="@drawable/ic_local_dining_black_24dp"
+                android:title="Commandes Restaurant" />
+
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:id="@+id/nav_product"
+                android:icon="@drawable/ic_local_mall_black_24dp"
+                android:title="Commandes Super Marcher" />
+
+            <item
+                android:id="@+id/nav_coursier"
+                android:icon="@drawable/ic_local_taxi_black_24dp"
+                android:title="Mes courses" />
         </menu>
-    </item-->
+    </item>
 
 </menu>

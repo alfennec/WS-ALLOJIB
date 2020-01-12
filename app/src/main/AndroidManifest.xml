@@ -24,7 +24,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".controller.Commande_coursier"></activity>
+        <activity android:name=".controller.Commande_product"></activity>
+        <activity android:name=".controller.Order_Product_Activity" />
+        <activity
+            android:name=".controller.CategoryProduct_Activity"
+            android:label="@string/title_activity_category_product_"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".controller.Market_Activity" />
+        <activity android:name=".controller.Commande_coursier" />
         <activity android:name=".controller.CoursierActivity" />
         <activity android:name=".controller.RestaurantActivity" />
         <activity android:name=".controller.ProfileActivity" />
