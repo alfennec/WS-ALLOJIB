@@ -47,9 +47,9 @@ public class Order_Product_Activity extends AppCompatActivity {
 
     public static Order_Product_Activity main;
 
-    public Button btn_maps,btn_valider_commande;
+    public Button btn_valider_commande;
 
-    public ImageButton btnDatePicker, btnTimePicker;
+    public ImageButton btnDatePicker, btnTimePicker, btn_maps;
     public EditText txtDate, txtTime;
     public TextInputEditText personne_conserner, tel_personne, note_client;
 
@@ -92,7 +92,7 @@ public class Order_Product_Activity extends AppCompatActivity {
         btnTimePicker=(ImageButton)findViewById(R.id.btn_time);
         txtDate=(EditText)findViewById(R.id.in_date);
         txtTime=(EditText)findViewById(R.id.in_time);
-        btn_maps = (Button) findViewById(R.id.btn_maps);
+        btn_maps = (ImageButton) findViewById(R.id.btn_maps);
 
         personne_conserner = (TextInputEditText)findViewById(R.id.personne_conserner);
         tel_personne = (TextInputEditText)findViewById(R.id.tel_personne);

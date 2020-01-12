@@ -45,6 +45,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -152,6 +154,11 @@ public class Home_Activity extends AppCompatActivity {
         JsonUrlProduct jsonUrlProduct = new JsonUrlProduct(url_informations+"tbl_product", main);
         JsonUrlMarket jsonMarket = new JsonUrlMarket(url_informations+"tbl_market", main);
         JsonUrlCategoryProduct jsonUrlCategoryProduct = new JsonUrlCategoryProduct(url_informations+"tbl_category_product", main);
+
+
+        /*********************/
+
+
     }
 
     public static void OnJsonSucces()
@@ -207,6 +214,43 @@ public class Home_Activity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                composeMessage();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static void composeMessage ()
+    {
+        Intent callIntent = new Intent(Intent.ACTION_CALL); //use ACTION_CALL class
+        callIntent.setData(Uri.parse("tel:0611625432"));    //this is the phone number calling
+        //check permission
+        //If the device is running Android 6.0 (API level 23) and the app's targetSdkVersion is 23 or higher,
+        //the system asks the user to grant approval.
+        if (ActivityCompat.checkSelfPermission(main, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+        {
+            //request permission from user if the app hasn't got the required permission
+            ActivityCompat.requestPermissions(main,
+                    new String[]{Manifest.permission.CALL_PHONE},   //request specific permission from user
+                    10);
+            return;
+        }else {     //have got permission
+            try{
+                main.startActivity(callIntent);  //call activity and make phone call
+            }
+            catch (android.content.ActivityNotFoundException ex){
+                Toast.makeText(main.getApplicationContext(),"une erreur c'est produite",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 
