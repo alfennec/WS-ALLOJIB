@@ -24,6 +24,8 @@ import com.fennec.allojib.entity.Client;
 import com.fennec.allojib.repository.ClientRepository;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.net.URLEncoder;
+
 public class Register_form extends AppCompatActivity {
 
     public Button button_valide_form;
@@ -128,6 +130,10 @@ public class Register_form extends AppCompatActivity {
                         String adresse          = "&adresse="+new_Client.adresse;
                         String ville            = "&ville="+new_Client.ville;
                         String sexe             = "&sexe="+new_Client.sexe;
+
+                        try {
+                            adresse = "&adresse="+ URLEncoder.encode(new_Client.adresse, "UTF-8");
+                        }catch (Exception e) {}
 
                         url_informations = url_informations+email+pass+nom+prenom+tel+adresse+ville+sexe;
 

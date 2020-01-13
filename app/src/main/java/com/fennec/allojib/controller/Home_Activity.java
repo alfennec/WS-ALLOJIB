@@ -176,7 +176,7 @@ public class Home_Activity extends AppCompatActivity {
             Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ url_informations);
             Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ id_order);
 
-            JsonGetOrderPlat jsonGetOrderPlat = new JsonGetOrderPlat(url_informations, main);
+            JsonGetOrderPlat jsonGetOrderPlat = new JsonGetOrderPlat(url_informations, main,1);
         }
     }
 
@@ -195,7 +195,7 @@ public class Home_Activity extends AppCompatActivity {
             Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ url_informations);
             Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ id_order);
 
-            JsonGetOrderProduct jsonGetOrderProduct = new JsonGetOrderProduct(url_informations, main);
+            JsonGetOrderProduct jsonGetOrderProduct = new JsonGetOrderProduct(url_informations, main,1);
         }
     }
 

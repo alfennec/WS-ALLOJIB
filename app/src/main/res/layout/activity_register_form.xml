@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Veuillez saisir vos infotmations"
+                android:text="Veuillez saisir vos informations"
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
@@ -177,7 +177,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Retaper votre mot de passe"
+            android:hint="Retapez votre mot de passe"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>

@@ -3,6 +3,8 @@ package com.fennec.allojib.config;
 import android.content.Context;
 import android.util.Log;
 
+import com.fennec.allojib.controller.Commande_Activity;
+import com.fennec.allojib.controller.Commande_product;
 import com.fennec.allojib.entity.OrderProduct;
 import com.fennec.allojib.myInterface.IonHandler;
 import com.fennec.allojib.repository.OrderProductRepository;
@@ -15,8 +17,12 @@ import org.json.JSONObject;
 
 public class JsonGetOrderProduct implements IonHandler {
 
-    public JsonGetOrderProduct(String link , final Context ctx)
+    public int choice;
+
+    public JsonGetOrderProduct(String link , final Context ctx, int choice)
     {
+        this.choice = choice;
+
         Ion.with(ctx)
                 .load(link)
                 .asString()
@@ -45,6 +51,10 @@ public class JsonGetOrderProduct implements IonHandler {
         ParseData(obj.toString());
 
         /** after write you code from  main **/
+        if(choice == 2)
+        {
+            Commande_product.onSucces();
+        }
     }
 
     @Override

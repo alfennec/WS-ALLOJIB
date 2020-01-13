@@ -8,10 +8,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fennec.allojib.R;
 import com.fennec.allojib.adapter.CategoryPlatAdapter;
@@ -61,6 +65,7 @@ public class Restaurant_Activity extends AppCompatActivity {
             public void onClick(View v)
             {
                 update_adapter_search(editText_restaurant.getText().toString());
+
             }
         });
 
@@ -107,6 +112,11 @@ public class Restaurant_Activity extends AppCompatActivity {
     {
         restaurantAdapter = new RestaurantAdapter(RestaurantRepository.RestaurantByName(name));
         recyclerView2.setAdapter(restaurantAdapter);
+
+        if(RestaurantRepository.RestaurantByName(name).size() == 0)
+        {
+            Costum_toast(" Pas de restaurant sous ce nom ");
+        }
     }
 
     public static void to_newIntent(int id_rest)
@@ -114,5 +124,22 @@ public class Restaurant_Activity extends AppCompatActivity {
         Intent intent = new Intent(main, CategoryPlat_Activity.class);
         intent.putExtra("id_rest",id_rest);
         main.startActivity(intent);
+    }
+
+    public static void Costum_toast(String msg)
+    {
+        /** Costume toast to test**/
+        LayoutInflater inflater = main.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.activity_costum_toast,
+                (ViewGroup) main.findViewById(R.id.toast_layout_root));
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(msg);
+
+        Toast toast = new Toast(main.getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+        /** end teaosot **/
     }
 }

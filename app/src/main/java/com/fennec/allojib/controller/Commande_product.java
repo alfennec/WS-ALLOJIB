@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import com.fennec.allojib.R;
 import com.fennec.allojib.adapter.CommandePlatAdapter;
 import com.fennec.allojib.adapter.CommandeProductAdapter;
+import com.fennec.allojib.config.JsonGetOrderProduct;
+import com.fennec.allojib.config.constant;
 import com.fennec.allojib.entity.PassOrderPlat;
 import com.fennec.allojib.entity.PassOrderProduct;
 import com.fennec.allojib.repository.OrderPlatRepository;
@@ -32,6 +35,11 @@ public class Commande_product extends AppCompatActivity {
     public static ImageView iv_c1,iv_c2,iv_c3,iv_c4,iv_c5;
     public static TextView tv_c1,tv_c2,tv_c3,tv_c4,tv_c5;
 
+    public static ProgressDialog dialog;
+
+    public static int id_order;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +47,7 @@ public class Commande_product extends AppCompatActivity {
 
         main = this;
 
-        int id_order = getIntent().getIntExtra("id_order",0);
+        id_order = getIntent().getIntExtra("id_order",0);
 
         for (int i = 0; i < PassOrderProductRepository.list_passOrderProduct.size(); i++)
         {
@@ -78,7 +86,7 @@ public class Commande_product extends AppCompatActivity {
         tv_c4 = (TextView) findViewById(R.id.tv_c4);
         tv_c5 = (TextView) findViewById(R.id.tv_c5);
 
-        int situation = PassOrderPlatRepository.list_passOrderPlat.get(PassOrderPlatRepository.list_passOrderPlat.size()-1).situation;
+        int situation = CurrentPassOrder.situation;
 
         switch (situation)
         {
@@ -90,5 +98,33 @@ public class Commande_product extends AppCompatActivity {
         }
 
 
+        OrderProductRepository.list_orderProduct.clear();
+
+        String url_informations = constant.url_host+"json/getOrderProduct.php?";
+
+        String myid_order = "id_order="+ id_order;
+
+        url_informations = url_informations+myid_order;
+
+        Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ url_informations);
+        Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ myid_order);
+
+        JsonGetOrderProduct jsonGetOrderProduct = new JsonGetOrderProduct(url_informations, main, 2);
+
+        dialog = ProgressDialog.show(main, "", "Traitement de données. Veulliez attendre ...", true);
+    }
+
+    public static void onSucces()
+    {
+        /** adapter for test we have to improve our self for this app  **/
+        LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(lm);
+
+        commandeProductAdapter = new CommandeProductAdapter(OrderProductRepository.WithIdorder(CurrentPassOrder.id));
+        recyclerView.setAdapter(commandeProductAdapter);
+
+        Log.d("TAG_PASSORDER", "onCreate: --------------------> "+OrderPlatRepository.WithIdorder(CurrentPassOrder.id).size());
+
+        dialog.dismiss();
     }
 }

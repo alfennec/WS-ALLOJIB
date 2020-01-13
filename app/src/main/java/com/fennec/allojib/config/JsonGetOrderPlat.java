@@ -3,6 +3,7 @@ package com.fennec.allojib.config;
 import android.content.Context;
 import android.util.Log;
 
+import com.fennec.allojib.controller.Commande_Activity;
 import com.fennec.allojib.entity.OrderPlat;
 import com.fennec.allojib.entity.PassOrderPlat;
 import com.fennec.allojib.myInterface.IonHandler;
@@ -17,8 +18,12 @@ import org.json.JSONObject;
 
 public class JsonGetOrderPlat implements IonHandler {
 
-    public JsonGetOrderPlat(String link , final Context ctx)
+    public int choice;
+
+    public JsonGetOrderPlat(String link , final Context ctx, int choice)
     {
+        this.choice = choice;
+
         Ion.with(ctx)
                 .load(link)
                 .asString()
@@ -46,6 +51,10 @@ public class JsonGetOrderPlat implements IonHandler {
         ParseData(obj.toString());
 
         /** after write you code from  main **/
+        if(choice == 2)
+        {
+            Commande_Activity.onSucces();
+        }
     }
 
     @Override

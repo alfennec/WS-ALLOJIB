@@ -65,7 +65,7 @@ public class CommandeProductAdapter extends RecyclerView.Adapter<CommandeProduct
         final Product current_Product = ProductRepository.getPlatById(myOrderProduct.id_product);
 
         holder.plat_name.setText(current_Product.intituler);
-        holder.plat_prix.setText(""+current_Product.prix*myOrderProduct.quantity);
+        holder.plat_prix.setText("x "+myOrderProduct.quantity+"      "+current_Product.prix*myOrderProduct.quantity+" MAD");
 
         holder.parent.setOnClickListener(new View.OnClickListener()
         {

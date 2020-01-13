@@ -69,7 +69,7 @@ public class CommandePlatAdapter extends RecyclerView.Adapter<CommandePlatAdapte
         final Plat current_plat = PlatRepository.getPlatById(myOrderPlat.id_plat);
 
         holder.plat_name.setText(current_plat.intituler);
-        holder.plat_prix.setText(""+current_plat.prix*myOrderPlat.quantity);
+        holder.plat_prix.setText("x "+myOrderPlat.quantity+"      "+current_plat.prix*myOrderPlat.quantity+" MAD");
 
         holder.parent.setOnClickListener(new View.OnClickListener()
         {

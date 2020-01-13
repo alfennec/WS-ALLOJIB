@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void OnFailedLogin()
     {
+        dialog.dismiss();
         Costum_toast(" Email ou mot de pass incorrect !");
     }
 

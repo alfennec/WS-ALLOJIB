@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,8 +14,11 @@ import android.widget.TextView;
 import com.fennec.allojib.R;
 import com.fennec.allojib.adapter.CommandePlatAdapter;
 import com.fennec.allojib.adapter.OrderPlatAdapter;
+import com.fennec.allojib.config.JsonGetOrderPlat;
+import com.fennec.allojib.config.constant;
 import com.fennec.allojib.entity.PassOrderPlat;
 import com.fennec.allojib.repository.OrderPlatRepository;
+import com.fennec.allojib.repository.OrderProductRepository;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
 
 public class Commande_Activity extends AppCompatActivity {
@@ -30,6 +34,10 @@ public class Commande_Activity extends AppCompatActivity {
     public static ImageView iv_c1,iv_c2,iv_c3,iv_c4,iv_c5;
     public static TextView tv_c1,tv_c2,tv_c3,tv_c4,tv_c5;
 
+    public int id_order;
+
+    public static ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,7 +45,7 @@ public class Commande_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_commande);
         main = this;
 
-        int id_order = getIntent().getIntExtra("id_order",0);
+        id_order = getIntent().getIntExtra("id_order",0);
 
         for (int i = 0; i < PassOrderPlatRepository.list_passOrderPlat.size(); i++)
         {
@@ -54,13 +62,8 @@ public class Commande_Activity extends AppCompatActivity {
         tv_total.setText("Total :"+CurrentPassOrder.total+" MAD");
 
 
-        /** adapter for test we have to improve our self for this app  **/
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(lm);
 
-        commandePlatAdapter = new CommandePlatAdapter(OrderPlatRepository.WithIdorder(CurrentPassOrder.id));
-        recyclerView.setAdapter(commandePlatAdapter);
         /** adapter for test we have to improve our self for this end  **/
 
 
@@ -76,7 +79,7 @@ public class Commande_Activity extends AppCompatActivity {
         tv_c4 = (TextView) findViewById(R.id.tv_c4);
         tv_c5 = (TextView) findViewById(R.id.tv_c5);
 
-        int situation = PassOrderPlatRepository.list_passOrderPlat.get(PassOrderPlatRepository.list_passOrderPlat.size()-1).situation;
+        int situation = CurrentPassOrder.situation;
 
         switch (situation)
         {
@@ -92,5 +95,36 @@ public class Commande_Activity extends AppCompatActivity {
             Log.d("TAG_PASSORDER", "onCreate: --------------------> "+OrderPlatRepository.list_orderPlat.get(i).id_passOrder);
         }
 
+        /************** get order ***/
+
+        OrderPlatRepository.list_orderPlat.clear();
+
+        String url_informations = constant.url_host+"json/getOrderPlat.php?";
+
+        String my_id_order = "id_order="+ id_order;
+
+        url_informations = url_informations+my_id_order;
+
+        Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ url_informations);
+        Log.d("TAG_JSON_ORDER", "-----------------------------> TO SEND "+ my_id_order);
+
+        JsonGetOrderPlat jsonGetOrderPlat = new JsonGetOrderPlat(url_informations, main,2);
+
+        dialog = ProgressDialog.show(main, "", "Traitement de données. Veulliez attendre ...", true);
+
+    }
+
+    public static void onSucces()
+    {
+        /** adapter for test we have to improve our self for this app  **/
+        LinearLayoutManager lm = new LinearLayoutManager(main, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(lm);
+
+        commandePlatAdapter = new CommandePlatAdapter(OrderPlatRepository.WithIdorder(CurrentPassOrder.id));
+        recyclerView.setAdapter(commandePlatAdapter);
+
+        Log.d("TAG_PASSORDER", "onCreate: --------------------> "+OrderPlatRepository.WithIdorder(CurrentPassOrder.id).size());
+
+        dialog.dismiss();
     }
 }
