@@ -21,13 +21,15 @@ public class JsonUrlClient implements IonHandler {
     {
         String result = obj.toString().replaceAll("\\s","");
 
-        //Log.d("TAG_JSON_LOGIN", "onClick: SEND"+result+"rt");
         try
         {
             if(Integer.parseInt(result) == 406 )
             {
                 MainActivity.OnFailedLogin();
-            }
+            }else
+                {
+                    MainActivity.OnFailedLogin();
+                }
         }catch (Exception e)
         {
             getJsonClient(obj.toString());
@@ -41,7 +43,8 @@ public class JsonUrlClient implements IonHandler {
     @Override
     public void onFailed(Object obj)
     {
-
+       //MainActivity.OnFailedLogin();
+        Log.d("TAG_JSON", "onClick: SEND URL on failed ");
     }
 
     public JsonUrlClient(String link , final Context ctx)
@@ -54,14 +57,24 @@ public class JsonUrlClient implements IonHandler {
                     @Override
                     public void onCompleted(Exception e, String result)
                     {
-                        if(result != null)
-                        {
-                            //Log.d("TAG_JSON", "onClick: SEND URL" + result +"LPR");
-                            onSucces(result);
-                        }else
+                        try {
+
+                            Log.d("TAG_JSON", "onClick: SEND URL before if " + result + " the exepction : "+e);
+                            if(result != null)
                             {
+                                Log.d("TAG_JSON", "onClick: SEND URLin if " + result +"LPR");
+                                onSucces(result);
+                            }else
+                            {
+                                Log.d("TAG_JSON", "onClick: SEND URLin else " + result);
                                 onFailed(-1);
                             }
+
+                        }catch (Exception ex)
+                        {
+                            Log.e("TAG_JSON", "problème :  " + ex);
+                        }
+
                     }
                 });
     }
