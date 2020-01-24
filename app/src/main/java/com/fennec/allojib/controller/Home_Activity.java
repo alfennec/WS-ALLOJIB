@@ -35,6 +35,7 @@ import com.fennec.allojib.repository.PassOrderProductRepository;
 import com.fennec.allojib.repository.PlatRepository;
 import com.fennec.allojib.repository.ProductRepository;
 import com.fennec.allojib.repository.RestaurantRepository;
+import com.fennec.allojib.repository.SettingRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -232,7 +233,7 @@ public class Home_Activity extends AppCompatActivity {
     public static void composeMessage ()
     {
         Intent callIntent = new Intent(Intent.ACTION_CALL); //use ACTION_CALL class
-        callIntent.setData(Uri.parse("tel:0611625432"));    //this is the phone number calling
+        callIntent.setData(Uri.parse("tel:"+ SettingRepository.main_Setting.app_tel));    //this is the phone number calling
         //check permission
         //If the device is running Android 6.0 (API level 23) and the app's targetSdkVersion is 23 or higher,
         //the system asks the user to grant approval.

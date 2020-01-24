@@ -77,6 +77,8 @@ public class Order_Plat_Activity extends AppCompatActivity {
 
     public static ProgressDialog dialog;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -186,6 +188,8 @@ public class Order_Plat_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                constant.id_maps = 1;
+
                 Intent intent = new Intent(main, MapsActivity2.class);
                 startActivity(intent);
             }

@@ -2,9 +2,11 @@ package com.fennec.allojib.config;
 
 public class constant {
 
-    //public static  String url_host = "http://192.168.1.5/livraison/";
+    //public static  String url_host = "http://192.168.1.6/livraison/";
     //public static  String url_host = "http://allojib.eradroids.com/";
     public static  String url_host = "https://allojib.ma/";
+
+    public static int id_maps = 0;
 
     ////localhost/livraison/json/getOrderPlat.php?id_order=1
     ////localhost/livraison/json/getPassOrderPlat.php?id_client=1

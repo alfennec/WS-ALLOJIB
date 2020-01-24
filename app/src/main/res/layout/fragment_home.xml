@@ -36,7 +36,7 @@
         android:layout_weight="1"
         android:background="@drawable/menu_bt2"
         android:layout_marginBottom="10dp"
-        android:text="Super Marcher"
+        android:text="Super Marché"
         android:textColor="#fff"
         android:textSize="30sp"
         android:textStyle="bold"/>

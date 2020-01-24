@@ -28,6 +28,7 @@ import com.fennec.allojib.entity.Coursier;
 import com.fennec.allojib.repository.ClientRepository;
 import com.fennec.allojib.repository.CoursierRepository;
 import com.fennec.allojib.repository.PassOrderPlatRepository;
+import com.fennec.allojib.repository.SettingRepository;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -45,9 +46,11 @@ public class CoursierActivity extends AppCompatActivity {
 
     public Button btn_valider_commande;
 
-    public ImageButton btnDatePicker, btnTimePicker;
+    public ImageButton btnDatePicker, btnTimePicker, btn_maps_col, btn_maps_liv;
     public EditText txtDate, txtTime;
-    public TextInputLayout input_adr_col, input_adr_liv, input_detail, input_tel;
+    public static TextInputLayout input_adr_col, input_adr_liv, input_detail, input_tel;
+
+    public TextView tv_prix;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -82,6 +85,15 @@ public class CoursierActivity extends AppCompatActivity {
 
         btn_valider_commande = (Button) findViewById(R.id.btn_valider_commande);
 
+        tv_prix = (TextView) findViewById(R.id.tv_prix);
+
+        btn_maps_col = (ImageButton) findViewById(R.id.btn_maps_col);
+        btn_maps_liv = (ImageButton) findViewById(R.id.btn_maps_liv);
+
+
+
+        tv_prix.setText("Prix estimé de la livraison .... "+ SettingRepository.main_Setting.app_coursier +"MAD");
+
 
         btnDatePicker.setVisibility(View.GONE);
         btnTimePicker.setVisibility(View.GONE);
@@ -107,6 +119,28 @@ public class CoursierActivity extends AppCompatActivity {
                         txtDate.setVisibility(View.VISIBLE);
                         txtTime.setVisibility(View.VISIBLE);
                     }
+            }
+        });
+
+        btn_maps_col.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                constant.id_maps = 2;
+
+                Intent intent = new Intent(main, MapsActivity2.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_maps_liv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                constant.id_maps = 3;
+
+                Intent intent = new Intent(main, MapsActivity2.class);
+                startActivity(intent);
             }
         });
 

@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
                             url_informations = constant.url_host+url_informations+email+pass;
 
-                            Toast.makeText(main,""+editText_email.getEditText().getText().toString(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(main,""+editText_email.getEditText().getText().toString(), Toast.LENGTH_SHORT).show();
 
                             Log.d("TAG_DEPLOY", " app : "+url_informations);
 

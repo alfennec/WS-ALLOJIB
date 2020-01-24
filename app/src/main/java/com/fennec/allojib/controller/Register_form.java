@@ -2,6 +2,7 @@ package com.fennec.allojib.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,6 +41,8 @@ public class Register_form extends AppCompatActivity {
     public static Register_form main;
 
     public static Boolean all_Right ;
+
+    public static ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -139,6 +142,8 @@ public class Register_form extends AppCompatActivity {
 
                         jsonRegister = new JsonUrlResgistre(constant.url_host+url_informations, main);
 
+                        dialog = ProgressDialog.show(main, "", "Traitement de données. Veulliez attendre ...", true);
+
                     }else
                     {
                         textView_msg.setText("Retapez votre mot de passe");
@@ -150,12 +155,16 @@ public class Register_form extends AppCompatActivity {
 
     public static void OnSuccesRegistre()
     {
+        dialog.dismiss();
+
         Costum_toast("Inscription faite avec succes");
         main.finish();
     }
 
     public static void OnFailedRegistre()
     {
+        dialog.dismiss();
+
         Costum_toast("Erreur veuillez resaisir vos données");
     }
 

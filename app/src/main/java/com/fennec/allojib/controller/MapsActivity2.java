@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fennec.allojib.R;
+import com.fennec.allojib.config.constant;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -52,7 +53,7 @@ import com.google.android.libraries.places.compat.Places;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallback {
+public class  MapsActivity2 extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = MapsActivity2.class.getSimpleName();
     private GoogleMap mMap;
@@ -148,7 +149,20 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onClick(View v)
             {
-                Order_Plat_Activity.adresse_maps.setText(myAdresse);
+
+                Log.d("TAG_MAPS", "see id button " + constant.id_maps+ " "+myAdresse);
+
+                switch(constant.id_maps)
+                {
+                    case 1 : Order_Plat_Activity.adresse_maps.setText(myAdresse); break;
+
+                    case 2 : CoursierActivity.input_adr_col.getEditText().setText(myAdresse); break;
+
+                    case 3 : CoursierActivity.input_adr_liv.getEditText().setText(myAdresse); break;
+
+                    case 4 : Order_Product_Activity.adresse_maps.setText(myAdresse); break;
+                }
+
                 MapsActivity2.this.finish();
             }
         });

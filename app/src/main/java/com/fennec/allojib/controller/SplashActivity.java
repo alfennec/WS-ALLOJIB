@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.fennec.allojib.R;
+import com.fennec.allojib.config.JsonGetSetting;
+import com.fennec.allojib.config.JsonUrlClient;
+import com.fennec.allojib.config.constant;
+import com.fennec.allojib.repository.SettingRepository;
 import com.koushikdutta.ion.Ion;
 
 import java.security.cert.X509Certificate;
@@ -24,6 +30,8 @@ public class SplashActivity extends AppCompatActivity {
     public static int time_splash = 3000;
 
     public static SplashActivity main;
+
+    public JsonGetSetting jsonGetSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -66,6 +74,21 @@ public class SplashActivity extends AppCompatActivity {
                 return new X509Certificate[0];
             }
         }});
+
+        String url_informations = "json/getSetting.php";
+
+        url_informations = constant.url_host+url_informations;
+
+        Log.d("TAG_DEPLOY", " app : "+ url_informations);
+
+        jsonGetSetting = new JsonGetSetting(url_informations, main);
+
+
+
+    }
+
+    public static void onSucces()
+    {
 
     }
 }

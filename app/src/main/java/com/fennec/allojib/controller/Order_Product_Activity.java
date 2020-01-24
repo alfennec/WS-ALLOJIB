@@ -175,6 +175,9 @@ public class Order_Product_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+
+                constant.id_maps = 4;
+
                 Intent intent = new Intent(main, MapsActivity2.class);
                 startActivity(intent);
             }
